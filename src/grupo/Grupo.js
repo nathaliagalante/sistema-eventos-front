@@ -11,7 +11,8 @@ export default class Grupo extends Component {
         incluindo: false,
         alterando: false,
         gerenciando: false,
-        id: ""
+        id: "",
+        grupoSelecionado: ""
     }
 
     txtNome_change = (event) => {
@@ -34,7 +35,7 @@ export default class Grupo extends Component {
     }
 
     preencherListaMembros = (grupo) => {
-        const url = "/grupo/gerenciar/" + grupo.id + "/listar"
+        const url = window.servidor + '/grupo/gerenciar/' + grupo.id + '/listar'
         fetch(url)
             .then(console.log('Preenchido'))
             .then(response => response.json())
@@ -54,7 +55,7 @@ export default class Grupo extends Component {
     }
 
     gerenciarGrupo = (grupo) => {
-        this.setState({ gerenciando: true })
+        this.setState({ gerenciando: true, grupoSelecionado: grupo })
         this.preencherListaMembros(grupo)
     }
 
@@ -119,6 +120,36 @@ export default class Grupo extends Component {
 
         fetch(url, requestOptions)
             .then(this.preencherListaGrupo())
+            .catch(erro => console.log(erro));
+    }
+
+    esvaziarGrupo = (grupo) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        };
+
+        const url = window.servidor + '/grupo/gerenciar/' + grupo.id + '/membros/esvaziar'
+
+        fetch(url, requestOptions)
+            .then(this.preencherListaMembros(grupo))
+            .catch(erro => console.log(erro));
+    }
+
+    removerMembro = (grupo, membro) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        };
+
+        const url = window.servidor + '/grupo/gerenciar/' + grupo.id + '/membros/remover/' + membro.id
+
+        fetch(url, requestOptions)
+            .then(this.preencherListaMembros(grupo))
             .catch(erro => console.log(erro));
     }
 
@@ -261,6 +292,9 @@ export default class Grupo extends Component {
                 <div>
                     <h5>Gerenciamento de membros</h5>
                 </div>
+                <div>
+                <button type="button" className="btn btn-outline-danger mt-2" onClick={() => this.esvaziarGrupo(this.state.grupoSelecionado)}>Esvaziar grupo</button>
+                </div>
                 <table className="table mt-2">
                     <thead>
                         <tr>
@@ -274,7 +308,7 @@ export default class Grupo extends Component {
                             return <tr key={membro.id}>
                                 <th scope="row">{membro.id}</th>
                                 <td>{membro.nomeCompleto}</td>
-                                <td><button type="button" className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remover membro"><i className="bi bi-person-x"></i></button></td>
+                                <td><button type="button" onClick={() => this.removerMembro(this.state.grupoSelecionado, membro)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remover membro"><i className="bi bi-person-x"></i></button></td>
                             </tr>
                         })}
                     </tbody>

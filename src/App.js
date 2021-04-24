@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import Menu from './menu/Menu'
+import Home from './home/Home'
+import Rodape from './rodape/Rodape'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Grupo from './grupo/Grupo'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <div className="container-fluid">
+          <Menu />
+          
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/grupo">
+              <Grupo />
+            </Route>
+          </Switch>
+
+          <Rodape />
+        </div>
+      </BrowserRouter>
+
+    )
+  }
 }
-
-export default App;

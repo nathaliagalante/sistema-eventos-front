@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+window.servidor = 'http://localhost:8080'
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

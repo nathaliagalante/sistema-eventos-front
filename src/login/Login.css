@@ -1,0 +1,33 @@
+.display-flex-basic{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container{
+    height: 100vh;
+}
+
+.box-login{
+    height: 25em;
+    width: 20em;
+    background-color: #fff;
+    flex-direction: column;
+    box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+/**************************/
+/* ------ HEADINGS -------*/
+/**************************/
+h1{
+    text-transform: uppercase;
+    font-size: 2em;
+}
+
+/**************************/
+/* ------ BUTTONS -------*/
+/**************************/
+.btn{
+    width: 100%;
+}

@@ -4,6 +4,7 @@ import Home from './home/Home'
 import Rodape from './rodape/Rodape'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Grupo from './grupo/Grupo'
+import Login from './login/Login'
 
 export default class App extends Component {
   render() {
@@ -13,7 +14,10 @@ export default class App extends Component {
           <Menu />
           
           <Switch>
-            <Route exact path="/">
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route path="/home">
               <Home />
             </Route>
             <Route path="/grupo">

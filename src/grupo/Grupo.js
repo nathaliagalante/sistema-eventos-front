@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import DatePicker from 'react-date-picker'
+import Select from 'react-select'
 
 export default class Grupo extends Component {
     state = {
@@ -8,11 +9,33 @@ export default class Grupo extends Component {
         dataRenovacao: new Date(),
         grupos: [],
         membros: [],
+        usuariosSemGrupo: [],
         incluindo: false,
         alterando: false,
         gerenciando: false,
         id: "",
-        grupoSelecionado: ""
+        grupoSelecionado: "",
+        isClearable: true,
+        isDisabled: false,
+        isSearchable: true,
+        opcaoSelecionada: null,
+        liderSelecionado: null
+    }
+
+    handleChange = (valor) => {
+        console.log('Opção selecionada', valor)
+        this.setState({ opcaoSelecionada: valor },
+            () => console.log('Valor: ', this.state.opcaoSelecionada))
+    }
+
+    handleChange_lider = (valor) => {
+        console.log('Líder selecionado', valor)
+        this.setState({ liderSelecionado: valor },
+            () => console.log('Valor: ', this.state.liderSelecionado))
+    }
+
+    toggleDisabled = () => {
+        this.setState(state => ({ isDisabled: !state.isDisabled }));
     }
 
     txtNome_change = (event) => {
@@ -21,6 +44,10 @@ export default class Grupo extends Component {
 
     txtDescricao_change = (event) => {
         this.setState({ descricao: event.target.value })
+    }
+
+    lider_change = (grupoSelecionado) => {
+        this.setState({ lider: grupoSelecionado.lider })
     }
 
     dataRenovacao_change = (date) => {
@@ -42,6 +69,21 @@ export default class Grupo extends Component {
             .then(data => this.setState({ membros: data }));
     }
 
+    preencherComboboxUsuarios = () => {
+        const url = window.servidor + '/grupo/gerenciar/listargroupless'
+        fetch(url)
+            .then(response => response.json())
+            .then(data => this.setState({ usuariosSemGrupo: data }))
+    }
+
+    preencherComboboxLider = (grupo) => {
+        const url = window.servidor + '/grupo/gerenciar/' + grupo.id + '/listar'
+        fetch(url)
+            .then(console.log('Combobox de lideres preenchida'))
+            .then(response => response.json())
+            .then(data => this.setState({ membros: data }));
+    }
+
     componentDidMount() {
         this.preencherListaGrupo()
     }
@@ -57,6 +99,7 @@ export default class Grupo extends Component {
     gerenciarGrupo = (grupo) => {
         this.setState({ gerenciando: true, grupoSelecionado: grupo })
         this.preencherListaMembros(grupo)
+        this.preencherComboboxUsuarios()
     }
 
     gravarNovo = () => {
@@ -77,9 +120,14 @@ export default class Grupo extends Component {
         const url = window.servidor + '/grupo/gravar'
 
         fetch(url, requestOptions)
-            .then(console.log('Gravado'))
-            .then(this.setState({ incluindo: false }))
-            .then(this.preencherListaGrupo())
+            .then(fim => {
+                console.log('Gravado')
+                this.setState({ incluindo: false })
+                this.preencherListaGrupo()
+            })
+            //.then(console.log('Gravado'))
+            //.then(this.setState({ incluindo: false }))
+            //.then(this.preencherListaGrupo())
             .catch(erro => console.log(erro));
     }
 
@@ -102,8 +150,11 @@ export default class Grupo extends Component {
         const url = window.servidor + '/grupo/alterar'
 
         fetch(url, requestOptions)
-            .then(this.setState({ alterando: false }))
-            .then(this.preencherListaGrupo())
+            .then(fim => {
+                console.log('Gravado')
+                this.setState({ alterando: false })
+                this.preencherListaGrupo()
+            })
             .catch(erro => console.log(erro));
     }
 
@@ -119,7 +170,9 @@ export default class Grupo extends Component {
         const url = window.servidor + '/grupo/excluir/' + grupo.id
 
         fetch(url, requestOptions)
-            .then(this.preencherListaGrupo())
+            .then(fim => {
+                this.preencherListaGrupo()
+            })
             .catch(erro => console.log(erro));
     }
 
@@ -134,7 +187,28 @@ export default class Grupo extends Component {
         const url = window.servidor + '/grupo/gerenciar/' + grupo.id + '/membros/esvaziar'
 
         fetch(url, requestOptions)
-            .then(this.preencherListaMembros(grupo))
+            .then(fim => {
+                this.preencherListaMembros(grupo)
+                this.preencherComboboxUsuarios()
+            })
+            .catch(erro => console.log(erro));
+    }
+
+    adicionarMembro = (grupo, id_membro) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        };
+
+        const url = window.servidor + '/grupo/gerenciar/' + grupo.id + '/membros/adicionar/' + id_membro
+
+        fetch(url, requestOptions)
+            .then(fim => {
+                this.preencherListaMembros(grupo)
+                this.preencherComboboxUsuarios()
+            })
             .catch(erro => console.log(erro));
     }
 
@@ -149,7 +223,29 @@ export default class Grupo extends Component {
         const url = window.servidor + '/grupo/gerenciar/' + grupo.id + '/membros/remover/' + membro.id
 
         fetch(url, requestOptions)
-            .then(this.preencherListaMembros(grupo))
+            .then(fim => {
+                this.preencherListaMembros(grupo)
+                this.preencherComboboxUsuarios()
+            })
+            .catch(erro => console.log(erro));
+    }
+
+    escolherLider = (grupo, id_membro) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        };
+
+        const url = window.servidor + '/grupo/gerenciar/' + grupo.id + '/membros/lider/' + id_membro
+
+        fetch(url, requestOptions)
+            .then(fim => {
+                this.preencherListaMembros(grupo)
+                this.preencherComboboxLider(grupo)
+                this.preencherListaGrupo()
+            })
             .catch(erro => console.log(erro));
     }
 
@@ -159,7 +255,7 @@ export default class Grupo extends Component {
 
     renderCadastrarGrupo = () => {
         return (
-            <div className="row mt-5 pt-3">
+            <div className="row mt-5 pt-4">
                 <div>
                     <h5>Cadastro de grupo</h5>
                 </div>
@@ -202,7 +298,10 @@ export default class Grupo extends Component {
     renderExibirListaGrupos = () => {
         return (
             <div className="mt-5 pt-3">
-                <button type="button" className="btn btn-outline-primary mt-2" onClick={() => this.cadastrarNovo()}>Cadastrar</button>
+                <div className="col-1">
+                    <button type="button" className="btn btn-outline-primary mt-2" onClick={() => this.cadastrarNovo()}>Cadastrar</button>
+                </div>
+                
                 <table className="table mt-2">
                     <thead>
                         <tr>
@@ -210,6 +309,7 @@ export default class Grupo extends Component {
                             <th scope="col">Nome</th>
                             <th scope="col">Data de criação</th>
                             <th scope="col">Data de renovação</th>
+                            <th scope="col">Líder</th>
                             <th scope="col">Descrição</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
@@ -224,6 +324,7 @@ export default class Grupo extends Component {
                                 <td>{grupo.nome}</td>
                                 <td>{grupo.dataCriacao}</td>
                                 <td>{grupo.dataRenovacao}</td>
+                                <td>{grupo.lider}</td>
                                 <td>{grupo.descricao}</td>
                                 <td><button type="button" onClick={() => this.alterarNovo(grupo)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar grupo"><i className="bi bi-pencil-square"></i></button></td>
                                 <td><button type="button" onClick={() => this.gerenciarGrupo(grupo)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Gerenciar membros"><i className="bi bi-person-plus"></i></button></td>
@@ -238,7 +339,7 @@ export default class Grupo extends Component {
 
     renderAlterarGrupo = () => {
         return (
-            <div className="row mt-5 pt-3">
+            <div className="row mt-5 pt-4">
                 <div>
                     <h5>Alteração de grupo</h5>
                 </div>
@@ -287,13 +388,47 @@ export default class Grupo extends Component {
     }
 
     renderGerenciarMembros = () => {
+        const { opcaoSelecionada, liderSelecionado } = this.state;
         return (
-            <div className="mt-5 pt-3">
+            <div className="mt-5 pt-4">
                 <div>
                     <h5>Gerenciamento de membros</h5>
                 </div>
-                <div>
-                <button type="button" className="btn btn-outline-danger mt-2" onClick={() => this.esvaziarGrupo(this.state.grupoSelecionado)}>Esvaziar grupo</button>
+                <div className="row mt-2 pt-3">
+                    <div className="col-4">
+                        <Select
+                            className="basic-single"
+                            classNamePrefix="select"
+                            placeholder="Usuários sem grupo"
+                            onChange={this.handleChange}
+                            isSearchable={this.isSearchable}
+                            options={this.state.usuariosSemGrupo.map(u => ({ value: u.id, label: u.nomeCompleto }))}
+                            value={opcaoSelecionada}>
+                        </Select>
+                    </div>
+                    <div className="col-2">
+                        <button type="button" className="btn btn-outline-primary" onClick={() => this.adicionarMembro(this.state.grupoSelecionado, opcaoSelecionada.value)}>Adicionar</button>
+                    </div>
+                </div>
+                <div className="row mt-2 pt-2">
+                    <div className="col-4">
+                        <Select
+                            className="basic-single"
+                            classNamePrefix="select"
+                            placeholder="Escolha o líder..."
+                            onChange={this.handleChange_lider}
+                            isSearchable={this.isSearchable}
+                            options={this.state.membros.map(m => ({ value: m.id, label: m.nomeCompleto }))}
+                            value={liderSelecionado}>
+                        </Select>
+                        <p>Líder atual: <strong>{this.state.grupoSelecionado.lider}</strong></p>
+                    </div>
+                    <div className="col-2">
+                        <button type="button" className="btn btn-outline-primary" onClick={() => this.escolherLider(this.state.grupoSelecionado, liderSelecionado.value)}>Escolher líder</button>
+                    </div>
+                </div>
+                <div className="col-2">
+                    <button type="button" className="btn btn-outline-danger mt-2" onClick={() => this.esvaziarGrupo(this.state.grupoSelecionado)}>Esvaziar grupo</button>
                 </div>
                 <table className="table mt-2">
                     <thead>

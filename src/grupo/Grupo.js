@@ -435,6 +435,8 @@ export default class Grupo extends Component {
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nome</th>
+                            <th scope="" className="col-1"></th>
+                            <th scope=""></th>
                             <th scope=""></th>
                         </tr>
                     </thead>

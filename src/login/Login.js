@@ -2,6 +2,25 @@ import React, { Component } from 'react'
 import './Login.css';
 
 export default class Login extends Component {
+    state = {
+        login: '',
+        senha: ''
+    }
+
+    txtLogin_change = (event) => {
+        this.setState({login: event.target.value});
+    }
+
+    txtSenha_change = (event) => {
+        this.setState({senha: event.target.value});
+    }
+
+    login = () => {
+        const url = window.servidor + '/usuario/consultar'
+        fetch(url)
+            .then(response => response.json())
+    }
+
     render() {
         return (
             <div className="container display-flex-basic">

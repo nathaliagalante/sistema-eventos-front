@@ -159,7 +159,7 @@ export default class Grupo extends Component {
 
     renderCadastrarGrupo = () => {
         return (
-            <div className="row mt-5 pt-3">
+            <div className="row mt-5 pt-5">
                 <div>
                     <h5>Cadastro de grupo</h5>
                 </div>
@@ -201,7 +201,7 @@ export default class Grupo extends Component {
 
     renderExibirListaGrupos = () => {
         return (
-            <div className="mt-5 pt-3">
+            <div className="mt-5 pt-5">
                 <button type="button" className="btn btn-outline-primary mt-2" onClick={() => this.cadastrarNovo()}>Cadastrar</button>
                 <table className="table mt-2">
                     <thead>

@@ -14,10 +14,10 @@ export default class App extends Component {
           <Menu />
           
           <Switch>
-            <Route exact path="/login">
+            <Route path="/login">
               <Login />
             </Route>
-            <Route path="/home">
+            <Route exact path="/home">
               <Home />
             </Route>
             <Route path="/grupo">

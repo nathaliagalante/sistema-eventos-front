@@ -29,7 +29,7 @@ export default class AgendaEventos extends Component {
     render() {
         return (
             <div className="mt-5 pt-3">
-                <ScheduleComponent currentView='Month' readonly={true} width='100%' height='597px' locale='pt' eventSettings={{
+                <ScheduleComponent currentView='Month' readonly={true} width='100%' height='593px' locale='pt' eventSettings={{
                     dataSource: this.state.eventos,
                     fields: {
                         id: 'id',

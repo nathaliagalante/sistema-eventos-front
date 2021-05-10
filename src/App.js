@@ -3,6 +3,7 @@ import Menu from './menu/Menu'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import Grupo from './grupo/Grupo'
 import Login from './login/Login'
+import Usuario from './usuario/Usuario'
 import AgendaEventos from './agendaeventos/AgendaEventos'
 
 export default class App extends Component {
@@ -67,6 +68,9 @@ export default class App extends Component {
             </Route>
             <Route exact path="/agenda">
               <AgendaEventos />
+            </Route>
+            <Route path="/usuario">
+              <Usuario />
             </Route>
           </Switch>
         </div>

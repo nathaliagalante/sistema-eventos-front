@@ -21,7 +21,7 @@ export default class Menu extends Component {
                                 <Link className="nav-link active"to="/grupo">Grupos</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link active"to="/user">Usuários</Link>
+                                <Link className="nav-link active"to="/usuario">Usuários</Link>
                             </li>
                         </ul>
                         

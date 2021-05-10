@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Grupo from './grupo/Grupo'
 import Login from './login/Login'
 import AgendaEventos from './agendaeventos/AgendaEventos'
+import Usuario from './usuario/Usuario'
 
 export default class App extends Component {
   render() {
@@ -18,6 +19,9 @@ export default class App extends Component {
             </Route>
             <Route path="/grupo">
               <Grupo />
+            </Route>
+            <Route path="/usuario">
+              <Usuario />
             </Route>
             <Route path="/agenda">
               <AgendaEventos />

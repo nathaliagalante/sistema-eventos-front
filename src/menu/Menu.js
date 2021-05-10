@@ -9,6 +9,7 @@ export default class Menu extends Component {
                         <Link className="navbar-brand" to="/agenda">Agenda</Link>
                         <Link className="navbar-brand ml-auto" to="/login">Login</Link>
                         <Link className="navbar-brand" to="/grupo">Grupos</Link>
+                        <Link className="navbar-brand" to="/usuario">Usuarios</Link>
                     </div>
             </nav>        
             

@@ -7,7 +7,7 @@ export default class Menu extends Component {
         return(      
 
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-                <div className="container-fluid text-white p-2">
+                <div className="container-fluid color-nav text-white p-2">
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -22,6 +22,9 @@ export default class Menu extends Component {
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link active"to="/usuario">Usuários</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link active"to="/evento">Eventos</Link>
                             </li>
                         </ul>
                         

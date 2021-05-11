@@ -26,6 +26,88 @@ export default class AgendaEventos extends Component {
         this.preencherListaEvento()
     }
 
+    contentTemplate(props) {
+        return (<div>
+            {
+                props.elementType === 'cell' ?
+                    <div className="e-cell-content">
+                        <form className="e-schedule-form">
+                            <div>
+                                <input className="date e-field" type="text" name="DataInicio" placeholder="Data de início" />
+                            </div>
+                            <div>
+                                <input className="date2 e-field" type="text" name="DataFim" placeholder="Data de encerramento" />
+                            </div>
+                            <div>
+                                <input className="descricao e-field" type="text" name="Descricao" placeholder="Descrição" />
+                            </div>
+                            <div>
+                                <input className="localevento e-field" type="text" name="LocalEvento" placeholder="Local" />
+                            </div>
+                            <div>
+                                <input className="localinscricao e-field" type="text" name="LocalInscricao" placeholder="Local de inscrição" />
+                            </div>
+                            <div>
+                                <input className="publicoalvo e-field" type="text" name="PublicoAlvo" placeholder="Público alvo" />
+                            </div>
+                            <div>
+                                <input className="valorinvestimento e-field" type="number" name="ValorInvestimento" placeholder="Valor de investimento" />
+                            </div>
+                        </form>
+                    </div> :
+                    <div className="e-event-content">
+                        <div className="e-subject-wrap">
+                            <h6>
+                            {
+                                (props.dataInicio !== undefined && props.dataFim !== undefined) ?
+                                    <div className="data mt-2" data-toggle="tooltip" data-placement="top" title="Duração do evento"> <strong><i class="bi bi-calendar-check"></i>  </strong>{((props.dataInicio.getDate())) + "/" + ((props.dataInicio.getMonth() + 1)) + "/" + props.dataInicio.getFullYear() + " - " + ((props.dataFim.getDate())) + "/" + ((props.dataFim.getMonth() + 1)) + "/" + props.dataFim.getFullYear()}</div> : ""
+                            }
+                            {
+                                (props.descricao !== undefined) ?
+                                    <div className="descricao mt-3" data-toggle="tooltip" data-placement="top" title="Descrição"><i class="bi bi-file-text"></i> <strong>  </strong>{props.descricao}</div> : ""
+                            }
+                            {
+                                (props.localEvento !== undefined) ?
+                                    <div className="localEvento mt-3" data-toggle="tooltip" data-placement="top" title="Local"><i class="bi bi-geo-alt"></i><strong> </strong>{props.localEvento}</div> : ""
+                            }
+                            {
+                                (props.localInscricao !== undefined) ?
+                                    <div className="localInscricao mt-3" data-toggle="tooltip" data-placement="top" title="Local de inscrição"><i class="bi bi-signpost-split"></i><strong> </strong>{props.localInscricao}</div> : ""
+                            }
+                            {
+                                (props.publicoAlvo !== undefined) ?
+                                    <div className="publicoAlvo mt-3" data-toggle="tooltip" data-placement="top" title="Público alvo"><i class="bi bi-person-lines-fill"></i><strong> </strong>{props.publicoAlvo}</div> : ""
+                            }
+                            {
+                                (props.valorInvestimento !== undefined) ?
+                                    <div className="valorInvestimento mt-3" data-toggle="tooltip" data-placement="top" title="Valor de investimento"><i class="bi bi-wallet2"></i><strong> </strong> R$ {props.valorInvestimento}</div> : ""
+                            }
+                            </h6>
+                        </div>
+                    </div>
+            }
+        </div>
+        );
+    }
+
+    footerTemplate(props) {
+        return (<div>
+            {
+                props.elementType === 'cell' ?
+                    <div className="e-cell-footer">
+                        <button className="e-event-details" title="Extra Details">Extra Details</button>
+                        <button className="e-event-create" title="Add">Add</button>
+                    </div>
+                    :
+                    <div className="e-event-footer">
+                        <button className="e-event-edit" title="Edit">Edit</button>
+                        <button className="e-event-delete" title="Delete">Delete</button>
+                    </div>
+            }
+        </div>
+        );
+    }
+
     render() {
         return (
             <div className="mt-5 pt-3">
@@ -39,7 +121,7 @@ export default class AgendaEventos extends Component {
                         description: { name: 'descricao' },
                         location: { name: 'localEvento' }
                     }
-                }}>
+                }} quickInfoTemplates={{ content: this.contentTemplate.bind(this) }}>
                     <Inject services={[Day, Week, Month, WorkWeek, Agenda]} />
                 </ScheduleComponent>
             </div>

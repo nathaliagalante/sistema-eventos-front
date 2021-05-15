@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom'
 import './Menu.css';
 
 export default class Menu extends Component {
+    // logout = () => {
+    //     this.props.logado = false;
+    // }
+
     render(){
         return(      
 
@@ -18,16 +22,18 @@ export default class Menu extends Component {
                                 <Link className="nav-link active" aria-current="page" to="/agenda">Agenda</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link active"to="/grupo">Grupos</Link>
+                                <Link className="nav-link active" to="/grupo">Grupos</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link active"to="/usuario">Usuários</Link>
+                                <Link className="nav-link active" to="/usuario">Usuários</Link>
                             </li>
                         </ul>
                         
                         <div className="d-flex">
-                            <div>
-                                <Link className="navbar-brand" to="/login">Login</Link>
+                            <div> 
+                                {!this.props.logado ? <Link className="navbar-brand" to="/login">Login</Link> : <Link className="navbar-brand" to="/login">Logout</Link>}
+
+                                {/* <button type="button" className="navbar-brand" onClick={() => this.logout()}></button> */}
                             </div> 
                         </div>
                     </div>

@@ -97,7 +97,7 @@ export default class Grupo extends Component {
     }
 
     gerenciarGrupo = (grupo) => {
-        this.setState({ gerenciando: true, grupoSelecionado: grupo })
+        this.setState({ gerenciando: true, grupoSelecionado: grupo, opcaoSelecionada: null, liderSelecionado: null })
         this.preencherListaMembros(grupo)
         this.preencherComboboxUsuarios()
     }
@@ -251,6 +251,7 @@ export default class Grupo extends Component {
 
     voltar = () => {
         this.setState({ incluindo: false, alterando: false, gerenciando: false })
+        this.preencherListaGrupo()
     }
 
     renderCadastrarGrupo = () => {

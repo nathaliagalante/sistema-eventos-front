@@ -5,6 +5,7 @@ import Grupo from './grupo/Grupo'
 import Login from './login/Login'
 import Usuario from './usuario/Usuario'
 import AgendaEventos from './agendaeventos/AgendaEventos'
+import Evento from './eventos/Evento'
 
 export default class App extends Component {
 
@@ -54,10 +55,13 @@ export default class App extends Component {
             <Route path="/usuario">
               <Usuario />
             </Route>
+            <Route path="/evento">
+              <Evento />
+            </Route>
           </Switch>
         </div>
       </BrowserRouter>
 
-    )
-  }
+        )
+    }
 }

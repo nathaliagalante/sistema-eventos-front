@@ -19,7 +19,9 @@ export default class Grupo extends Component {
         isDisabled: false,
         isSearchable: true,
         opcaoSelecionada: null,
-        liderSelecionado: null
+        liderSelecionado: null,
+        detalhes: false,
+        lider: ""
     }
 
     handleChange = (valor) => {
@@ -93,13 +95,24 @@ export default class Grupo extends Component {
     }
 
     alterarNovo = (grupo) => {
-        this.setState({ alterando: true, nome: grupo.nome, id: grupo.id, descricao: grupo.descricao })
+        var dataConvertida = new Date(grupo.dataRenovacao);
+        dataConvertida.setDate(dataConvertida.getDate() + 1)
+        this.setState({ alterando: true, nome: grupo.nome, id: grupo.id, descricao: grupo.descricao, dataRenovacao: dataConvertida })
     }
 
     gerenciarGrupo = (grupo) => {
         this.setState({ gerenciando: true, grupoSelecionado: grupo, opcaoSelecionada: null, liderSelecionado: null })
         this.preencherListaMembros(grupo)
         this.preencherComboboxUsuarios()
+    }
+
+    verDetalhes = (grupo) => {
+        var dataRenovacaoConvertida = new Date(grupo.dataRenovacao);
+        var dataCriacaoConvertida = new Date(grupo.dataCriacao);
+        dataRenovacaoConvertida.setDate(dataRenovacaoConvertida.getDate() + 1)
+        dataCriacaoConvertida.setDate(dataCriacaoConvertida.getDate() + 1)
+        this.setState({ detalhes: true, grupoSelecionado: grupo, nome: grupo.nome, id: grupo.id, descricao: grupo.descricao, dataRenovacao: dataRenovacaoConvertida, dataCriacao: dataCriacaoConvertida, lider: grupo.lider })
+        this.preencherListaMembros(grupo)
     }
 
     gravarNovo = () => {
@@ -152,7 +165,7 @@ export default class Grupo extends Component {
         fetch(url, requestOptions)
             .then(fim => {
                 console.log('Gravado')
-                this.setState({ alterando: false })
+                this.setState({ alterando: false, dataRenovacao: new Date() })
                 this.preencherListaGrupo()
             })
             .catch(erro => console.log(erro));
@@ -250,7 +263,7 @@ export default class Grupo extends Component {
     }
 
     voltar = () => {
-        this.setState({ incluindo: false, alterando: false, gerenciando: false })
+        this.setState({ incluindo: false, alterando: false, gerenciando: false, detalhes: false, dataRenovacao: new Date() })
         this.preencherListaGrupo()
     }
 
@@ -302,7 +315,7 @@ export default class Grupo extends Component {
                 <div className="col-1">
                     <button type="button" className="btn btn-outline-primary mt-2" onClick={() => this.cadastrarNovo()}>Cadastrar</button>
                 </div>
-                
+
                 <table className="table mt-2">
                     <thead>
                         <tr>
@@ -320,13 +333,18 @@ export default class Grupo extends Component {
                     </thead>
                     <tbody>
                         {this.state.grupos && this.state.grupos.map(grupo => {
+                            var dataRenovacaoConvertida = new Date(grupo.dataRenovacao)
+                            var dataCriacaoConvertida = new Date(grupo.dataCriacao)
+                            dataRenovacaoConvertida.setDate(dataRenovacaoConvertida.getDate() + 1)
+                            dataCriacaoConvertida.setDate(dataCriacaoConvertida.getDate() + 1)
                             return <tr key={grupo.id}>
                                 <th scope="row">{grupo.id}</th>
                                 <td>{grupo.nome}</td>
-                                <td>{grupo.dataCriacao}</td>
-                                <td>{grupo.dataRenovacao}</td>
+                                <td>{((dataCriacaoConvertida.getDate())) + "/" + ((dataCriacaoConvertida.getMonth() + 1)) + "/" + dataCriacaoConvertida.getFullYear() }</td>
+                                <td>{((dataRenovacaoConvertida.getDate())) + "/" + ((dataRenovacaoConvertida.getMonth() + 1)) + "/" + dataRenovacaoConvertida.getFullYear() }</td>
                                 <td>{grupo.lider}</td>
                                 <td>{grupo.descricao}</td>
+                                <td><button type="button" onClick={() => this.verDetalhes(grupo)} className="btn btn-success" data-toggle="tooltip" data-placement="top" title="Ver Mais"><i className="bi bi-three-dots"></i></button></td>
                                 <td><button type="button" onClick={() => this.alterarNovo(grupo)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar grupo"><i className="bi bi-pencil-square"></i></button></td>
                                 <td><button type="button" onClick={() => this.gerenciarGrupo(grupo)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Gerenciar membros"><i className="bi bi-person-plus"></i></button></td>
                                 <td><button type="button" onClick={() => this.excluirGrupo(grupo)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir grupo"><i className="bi bi-trash"></i></button></td>
@@ -384,6 +402,92 @@ export default class Grupo extends Component {
                         <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
                     </div>
                 </div>
+            </div>
+        )
+    }
+
+    renderDetalhesGrupo = () => {
+        return (
+            <div className="row mt-5 pt-4">
+                <div>
+                    <h5>Detalhes do grupo</h5>
+                </div>
+                <div className="col-2">
+                    ID:
+                </div>
+                <div className="row mt-2">
+                    <div className="col-4">
+                        <input value={this.state.id} readOnly={true} className="form-control name-pull-image" type="text"></input>
+                    </div>
+                </div>
+                <div className="col-2">
+                    Nome:
+                </div>
+                <div className="row mt-2">
+                    <div className="col-4">
+                        <input value={this.state.nome} readOnly={true} className="form-control name-pull-image" type="text"></input>
+                    </div>
+                </div>
+                <div className="col-2">
+                    Descrição:
+                </div>
+                <div className="row mt-2">
+                    <div className="col-6">
+                        <input value={this.state.descricao} readOnly={true} className="form-control name-pull-image" type="text"></input>
+                    </div>
+                </div>
+                <div className="col-2">
+                    Data de criação:
+                </div>
+                <div className="row mt-2">
+                    <div className="col-2">
+                        <DatePicker value={this.state.dataCriacao} disabled={true}></DatePicker>
+                    </div>
+                </div>
+                <div className="col-2">
+                    Data de renovação:
+                </div>
+                <div className="row mt-2">
+                    <div className="col-2">
+                        <DatePicker value={this.state.dataRenovacao} disabled={true}></DatePicker>
+                    </div>
+                </div>
+                <div className="col-2">
+                    Líder:
+                </div>
+                <div className="row mt-2">
+                    <div className="col-3">
+                        <input value={this.state.lider} readOnly={true} className="form-control name-pull-image" type="text"></input>
+                    </div>
+                </div>
+                <div className="col-2">
+                    Membros:
+                </div>
+                <div>
+                    <table className="table mt-2">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.membros && this.state.membros.map(membro => {
+                                return <tr key={membro.id}>
+                                    <th scope="row">{membro.id}</th>
+                                    <td>{membro.nomeCompleto}</td>
+                                </tr>
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div className="row mt-2">
+                    <div className="col-1">
+                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
+                    </div>
+                </div>
+                <div className="row pt-5"></div>
             </div>
         )
     }
@@ -471,7 +575,11 @@ export default class Grupo extends Component {
                 if (this.state.gerenciando) {
                     pagina = this.renderGerenciarMembros()
                 } else {
-                    pagina = this.renderExibirListaGrupos()
+                    if (this.state.detalhes) {
+                        pagina = this.renderDetalhesGrupo()
+                    } else {
+                        pagina = this.renderExibirListaGrupos()
+                    }
                 }
             }
         }

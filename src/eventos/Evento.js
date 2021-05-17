@@ -15,7 +15,8 @@ export default class Evento extends Component {
         incluindo: false,
         alterando: false,
         eventoSelecionado: "",
-        ano: ""
+        ano: "",
+        detalhes: false
     }
 
     txtNome_change = (event) => {
@@ -71,11 +72,23 @@ export default class Evento extends Component {
     }
 
     alterarEvento = (evento) => {
-        this.setState({ alterando: true, eventoSelecionado: evento, id: evento.id, nome: evento.nome, descricao: evento.descricao, localEvento: evento.localEvento, localInscricao: evento.localInscricao, publicoAlvo: evento.publicoAlvo, valorInvestimento: evento.valorInvestimento })
+        var dataInicioConvertida = new Date(evento.dataInicio);
+        var dataFimConvertida = new Date(evento.dataFim);
+        dataInicioConvertida.setDate(dataInicioConvertida.getDate() + 1);
+        dataFimConvertida.setDate(dataFimConvertida.getDate() + 1);
+        this.setState({ alterando: true, eventoSelecionado: evento, id: evento.id, nome: evento.nome, descricao: evento.descricao, localEvento: evento.localEvento, localInscricao: evento.localInscricao, publicoAlvo: evento.publicoAlvo, valorInvestimento: evento.valorInvestimento, dataInicio: dataInicioConvertida, dataFim: dataFimConvertida })
+    }
+
+    verDetalhes = (evento) => {
+        var dataInicioConvertida = new Date(evento.dataInicio);
+        var dataFimConvertida = new Date(evento.dataFim);
+        dataInicioConvertida.setDate(dataInicioConvertida.getDate() + 1);
+        dataFimConvertida.setDate(dataFimConvertida.getDate() + 1);
+        this.setState({ detalhes: true, id: evento.id, nome: evento.nome, descricao: evento.descricao, localEvento: evento.localEvento, localInscricao: evento.localInscricao, publicoAlvo: evento.publicoAlvo, valorInvestimento: evento.valorInvestimento, dataInicio: dataInicioConvertida, dataFim: dataFimConvertida })
     }
 
     voltar = () => {
-        this.setState({ incluindo: false, alterando: false })
+        this.setState({ incluindo: false, alterando: false, detalhes: false, dataInicio: new Date(), dataFim: new Date() })
     }
 
     gravarNovo = () => {
@@ -152,7 +165,7 @@ export default class Evento extends Component {
         fetch(url, requestOptions)
             .then(fim => {
                 console.log('Gravado')
-                this.setState({ alterando: false })
+                this.setState({ alterando: false, dataInicio: new Date(), dataFim: new Date() })
                 this.preencherListaEvento()
             })
             .catch(erro => console.log(erro));
@@ -209,17 +222,23 @@ export default class Evento extends Component {
                             <th scope="col">Local</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.eventos && this.state.eventos.map(evento => {
+                            var dataInicioConvertida = new Date(evento.dataInicio);
+                            var dataFimConvertida = new Date(evento.dataFim);
+                            dataInicioConvertida.setDate(dataInicioConvertida.getDate() + 1);
+                            dataFimConvertida.setDate(dataFimConvertida.getDate() + 1);
                             return <tr key={evento.id}>
                                 <th scope="row">{evento.id}</th>
                                 <td>{evento.nome}</td>
                                 <td>{evento.descricao}</td>
-                                <td>{evento.dataInicio}</td>
-                                <td>{evento.dataFim}</td>
+                                <td>{((dataInicioConvertida.getDate())) + "/" + ((dataInicioConvertida.getMonth() + 1)) + "/" + dataInicioConvertida.getFullYear()}</td>
+                                <td>{((dataFimConvertida.getDate())) + "/" + ((dataFimConvertida.getMonth() + 1)) + "/" + dataFimConvertida.getFullYear()}</td>
                                 <td>{evento.localEvento}</td>
+                                <td><button type="button" onClick={() => this.verDetalhes(evento)} className="btn btn-success" data-toggle="tooltip" data-placement="top" title="Ver Mais"><i className="bi bi-three-dots"></i></button></td>
                                 <td><button type="button" onClick={() => this.alterarEvento(evento)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar evento"><i className="bi bi-pencil-square"></i></button></td>
                                 <td><button type="button" onClick={() => this.excluirEvento(evento)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir evento"><i className="bi bi-trash"></i></button></td>
                             </tr>
@@ -322,6 +341,94 @@ export default class Evento extends Component {
         )
     }
 
+    renderDetalhesEvento = () => {
+        return (
+            <div className="row mt-5 pt-4">
+                <div>
+                    <h5>Detalhes do evento</h5>
+                </div>
+                <div className="col-2">
+                    ID:
+                </div>
+                <div className="row">
+                    <div className="col-4">
+                        <input value={this.state.id} readOnly={true} className="form-control name-pull-image" type="text"></input>
+                    </div>
+                </div>
+                <div className="col-2">
+                    Nome:
+                </div>
+                <div className="row">
+                    <div className="col-4">
+                        <input value={this.state.nome} readOnly={true} className="form-control name-pull-image" type="text"></input>
+                    </div>
+                </div>
+                <div className="col-2">
+                    Descrição:
+                </div>
+                <div className="row">
+                    <div className="col-6">
+                        <input value={this.state.descricao} readOnly={true} className="form-control name-pull-image" type="text"></input>
+                    </div>
+                </div>
+                <div className="col-2">
+                    Data de início:
+                </div>
+                <div className="row">
+                    <div className="col-2">
+                        <DatePicker value={this.state.dataInicio} disabled={true}></DatePicker>
+                    </div>
+                </div>
+                <div className="col-2">
+                    Data de encerramento:
+                </div>
+                <div className="row">
+                    <div className="col-2">
+                        <DatePicker value={this.state.dataFim} disabled={true}></DatePicker>
+                    </div>
+                </div>
+                <div className="col-2 pt-2">
+                    Local:
+                </div>
+                <div className="row">
+                    <div className="col-5">
+                        <input value={this.state.localEvento} readOnly={true} className="form-control name-pull-image" type="text"></input>
+                    </div>
+                </div>
+                <div className="col-2">
+                    Local de inscrição:
+                </div>
+                <div className="row">
+                    <div className="col-5">
+                        <input value={this.state.localInscricao} readOnly={true} className="form-control name-pull-image" type="text"></input>
+                    </div>
+                </div>
+                <div className="col-2">
+                    Público alvo:
+                </div>
+                <div className="row">
+                    <div className="col-4">
+                        <input value={this.state.publicoAlvo} readOnly={true} className="form-control name-pull-image" type="text"></input>
+                    </div>
+                </div>
+                <div className="col-2">
+                    Valor de investimento:
+                </div>
+                <div className="row">
+                    <div className="col-2">
+                        <input value={this.state.valorInvestimento} readOnly={true} className="form-control name-pull-image" type="number"></input>
+                    </div>
+                </div>
+                <div className="row mt-2">
+                    <div className="col-1">
+                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
+                    </div>
+                </div>
+                <div className="row pt-5"></div>
+            </div>
+        )
+    }
+
     renderCadastrarEvento = () => {
         return (
             <div className="row mt-5 pt-4">
@@ -413,7 +520,11 @@ export default class Evento extends Component {
             if (this.state.alterando) {
                 pagina = this.renderAlterarEvento()
             } else {
-                pagina = this.renderListaEventos()
+                if (this.state.detalhes) {
+                    pagina = this.renderDetalhesEvento()
+                } else {
+                    pagina = this.renderListaEventos()
+                }
             }
         }
         return pagina

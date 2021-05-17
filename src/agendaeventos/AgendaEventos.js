@@ -90,23 +90,6 @@ export default class AgendaEventos extends Component {
         );
     }
 
-    footerTemplate(props) {
-        return (<div>
-            {
-                props.elementType === 'cell' ?
-                    <div className="e-cell-footer">
-                        <button className="e-event-details" title="Extra Details">Extra Details</button>
-                        <button className="e-event-create" title="Add">Add</button>
-                    </div>
-                    :
-                    <div className="e-event-footer">
-                        <button className="e-event-edit" title="Edit">Edit</button>
-                        <button className="e-event-delete" title="Delete">Delete</button>
-                    </div>
-            }
-        </div>
-        );
-    }
 
     render() {
         return (

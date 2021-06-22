@@ -36,11 +36,15 @@ export default class App extends Component {
       return true;
   }
 
+  logout = () => {
+    this.setState({ autenticou: false })
+  }
+
   render() {
     return (
       <BrowserRouter>
         <div className="container-fluid">
-          <Menu logado={this.state.autenticou}/>
+          <Menu logado={this.state.autenticou} logout={this.logout} />
 
           <Switch>
             <Route path="/login">

@@ -12,7 +12,6 @@ export default class Menu extends Component {
     }
 
     render(){
-        console.log(this.props.logado);
         return(      
 
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -27,13 +26,17 @@ export default class Menu extends Component {
                                 <Link className="nav-link active" aria-current="page" to="/agenda">Agenda</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link active" to="/grupo">Grupos</Link>
+                                {!this.props.logado ? <Link className="d-none" to="/grupo">Grupos</Link> :
+                                <Link className="nav-link active" to="/grupo">Grupos</Link>}
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link active" to="/usuario">Usuários</Link>
+                                {!this.props.logado ? <Link className="d-none" to="/usuario">Usuários</Link> :
+                                <Link className="nav-link active" to="/usuario">Usuários</Link>}
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link active"to="/evento">Eventos</Link>
+                                {!this.props.logado ? <Link className="d-none" to="/evento">Eventos</Link> :
+                                <Link className="nav-link active"to="/evento">Eventos</Link> }
+                                
                             </li>
                         </ul>
                         

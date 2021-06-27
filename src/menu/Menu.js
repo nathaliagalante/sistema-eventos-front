@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import './Menu.css';
 
+
+
 export default class Menu extends Component {
     state = {
         logado: false
@@ -11,11 +13,13 @@ export default class Menu extends Component {
         this.props.logado = false;
     }
 
+    
+
     render(){
         return(      
 
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-                <div className="container-fluid text-white p-2">
+                <div className="container-fluid color-nav text-white p-2">
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -27,7 +31,7 @@ export default class Menu extends Component {
                             </li>
                             <li className="nav-item">
                                 {!this.props.logado ? <Link className="d-none" to="/grupo">Grupos</Link> :
-                                <Link className="nav-link active" to="/grupo">Grupos</Link>}
+                                <Link className="nav-link active" to="/grupo" >Grupos</Link>}
                             </li>
                             <li className="nav-item">
                                 {!this.props.logado ? <Link className="d-none" to="/usuario">Usuários</Link> :

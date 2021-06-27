@@ -273,35 +273,41 @@ export default class Grupo extends Component {
                 <div>
                     <h5>Cadastro de grupo</h5>
                 </div>
-                <div className="col-2">
-                    Nome:
-                </div>
                 <div className="row mt-2">
-                    <div className="col-4">
+                    <div className="col-auto">
+                        Nome:
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-4">
                         <input value={this.state.nome} onChange={this.txtNome_change} className="form-control name-pull-image" type="text"></input>
                     </div>
                 </div>
-                <div className="col-2">
-                    Descrição:
-                </div>
                 <div className="row mt-2">
-                    <div className="col-6">
+                    <div className="col-auto">
+                        Descrição:
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6">
                         <input value={this.state.descricao} onChange={this.txtDescricao_change} className="form-control name-pull-image" type="text"></input>
                     </div>
                 </div>
-                <div className="col-2">
-                    Data de renovação:
-                </div>
                 <div className="row mt-2">
-                    <div className="col-2">
+                    <div className="col-auto">
+                        Data de renovação:
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-2">
                         <DatePicker value={this.state.dataRenovacao} onChange={this.dataRenovacao_change}></DatePicker>
                     </div>
                 </div>
                 <div className="row mt-2">
-                    <div className="col-1">
+                    <div className="col-auto">
                         <button className="btn btn-primary" onClick={() => this.gravarNovo()}>Gravar</button>
                     </div>
-                    <div className="col-1">
+                    <div className="col-auto">
                         <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
                     </div>
                 </div>
@@ -315,43 +321,44 @@ export default class Grupo extends Component {
                 <div className="col-1">
                     <button type="button" className="btn btn-outline-primary mt-2" onClick={() => this.cadastrarNovo()}>Cadastrar</button>
                 </div>
-
-                <table className="table mt-2">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Data de criação</th>
-                            <th scope="col">Data de renovação</th>
-                            <th scope="col">Líder</th>
-                            <th scope="col">Descrição</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.grupos && this.state.grupos.map(grupo => {
-                            var dataRenovacaoConvertida = new Date(grupo.dataRenovacao)
-                            var dataCriacaoConvertida = new Date(grupo.dataCriacao)
-                            dataRenovacaoConvertida.setDate(dataRenovacaoConvertida.getDate() + 1)
-                            dataCriacaoConvertida.setDate(dataCriacaoConvertida.getDate() + 1)
-                            return <tr key={grupo.id}>
-                                <th scope="row">{grupo.id}</th>
-                                <td>{grupo.nome}</td>
-                                <td>{((dataCriacaoConvertida.getDate())) + "/" + ((dataCriacaoConvertida.getMonth() + 1)) + "/" + dataCriacaoConvertida.getFullYear() }</td>
-                                <td>{((dataRenovacaoConvertida.getDate())) + "/" + ((dataRenovacaoConvertida.getMonth() + 1)) + "/" + dataRenovacaoConvertida.getFullYear() }</td>
-                                <td>{grupo.lider}</td>
-                                <td>{grupo.descricao}</td>
-                                <td><button type="button" onClick={() => this.verDetalhes(grupo)} className="btn btn-success" data-toggle="tooltip" data-placement="top" title="Ver Mais"><i className="bi bi-three-dots"></i></button></td>
-                                <td><button type="button" onClick={() => this.alterarNovo(grupo)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar grupo"><i className="bi bi-pencil-square"></i></button></td>
-                                <td><button type="button" onClick={() => this.gerenciarGrupo(grupo)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Gerenciar membros"><i className="bi bi-person-plus"></i></button></td>
-                                <td><button type="button" onClick={() => this.excluirGrupo(grupo)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir grupo"><i className="bi bi-trash"></i></button></td>
+                <div class="table-responsive">
+                    <table className="table mt-2">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Data de criação</th>
+                                <th scope="col">Data de renovação</th>
+                                <th scope="col">Líder</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
                             </tr>
-                        })}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {this.state.grupos && this.state.grupos.map(grupo => {
+                                var dataRenovacaoConvertida = new Date(grupo.dataRenovacao)
+                                var dataCriacaoConvertida = new Date(grupo.dataCriacao)
+                                dataRenovacaoConvertida.setDate(dataRenovacaoConvertida.getDate() + 1)
+                                dataCriacaoConvertida.setDate(dataCriacaoConvertida.getDate() + 1)
+                                return <tr key={grupo.id}>
+                                    <th scope="row">{grupo.id}</th>
+                                    <td>{grupo.nome}</td>
+                                    <td>{((dataCriacaoConvertida.getDate())) + "/" + ((dataCriacaoConvertida.getMonth() + 1)) + "/" + dataCriacaoConvertida.getFullYear()}</td>
+                                    <td>{((dataRenovacaoConvertida.getDate())) + "/" + ((dataRenovacaoConvertida.getMonth() + 1)) + "/" + dataRenovacaoConvertida.getFullYear()}</td>
+                                    <td>{grupo.lider}</td>
+                                    <td>{grupo.descricao}</td>
+                                    <td><button type="button" onClick={() => this.verDetalhes(grupo)} className="btn btn-success" data-toggle="tooltip" data-placement="top" title="Ver Mais"><i className="bi bi-three-dots"></i></button></td>
+                                    <td><button type="button" onClick={() => this.alterarNovo(grupo)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar grupo"><i className="bi bi-pencil-square"></i></button></td>
+                                    <td><button type="button" onClick={() => this.gerenciarGrupo(grupo)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Gerenciar membros"><i className="bi bi-person-plus"></i></button></td>
+                                    <td><button type="button" onClick={() => this.excluirGrupo(grupo)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir grupo"><i className="bi bi-trash"></i></button></td>
+                                </tr>
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         )
     }
@@ -362,43 +369,51 @@ export default class Grupo extends Component {
                 <div>
                     <h5>Alteração de grupo</h5>
                 </div>
-                <div className="col-2">
-                    ID:
-                </div>
                 <div className="row mt-2">
-                    <div className="col-4">
+                    <div className="col-auto">
+                        ID:
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-4">
                         <input value={this.state.id} readOnly={true} className="form-control name-pull-image" type="text"></input>
                     </div>
                 </div>
-                <div className="col-2">
-                    Nome:
-                </div>
                 <div className="row mt-2">
-                    <div className="col-4">
+                    <div className="col-auto">
+                        Nome:
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-4">
                         <input value={this.state.nome} onChange={this.txtNome_change} className="form-control name-pull-image" type="text"></input>
                     </div>
                 </div>
-                <div className="col-2">
-                    Descrição:
-                </div>
                 <div className="row mt-2">
-                    <div className="col-6">
+                    <div className="col-auto">
+                        Descrição:
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6">
                         <input value={this.state.descricao} onChange={this.txtDescricao_change} className="form-control name-pull-image" type="text"></input>
                     </div>
                 </div>
-                <div className="col-2">
-                    Data de renovação:
-                </div>
                 <div className="row mt-2">
-                    <div className="col-2">
+                    <div className="col-auto">
+                        Data de renovação:
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-2">
                         <DatePicker value={this.state.dataRenovacao} onChange={this.dataRenovacao_change}></DatePicker>
                     </div>
                 </div>
                 <div className="row mt-2">
-                    <div className="col-1">
+                    <div className="col-auto">
                         <button className="btn btn-primary" onClick={() => this.gravarAlterar()}>Gravar</button>
                     </div>
-                    <div className="col-1">
+                    <div className="col-auto">
                         <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
                     </div>
                 </div>
@@ -412,78 +427,94 @@ export default class Grupo extends Component {
                 <div>
                     <h5>Detalhes do grupo</h5>
                 </div>
-                <div className="col-2">
-                    ID:
-                </div>
                 <div className="row mt-2">
-                    <div className="col-4">
+                    <div className="col-auto">
+                        ID:
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-4">
                         <input value={this.state.id} readOnly={true} className="form-control name-pull-image" type="text"></input>
                     </div>
                 </div>
-                <div className="col-2">
-                    Nome:
-                </div>
                 <div className="row mt-2">
-                    <div className="col-4">
+                    <div className="col-auto">
+                        Nome:
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-4">
                         <input value={this.state.nome} readOnly={true} className="form-control name-pull-image" type="text"></input>
                     </div>
                 </div>
-                <div className="col-2">
-                    Descrição:
-                </div>
                 <div className="row mt-2">
-                    <div className="col-6">
+                    <div className="col-auto">
+                        Descrição:
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6">
                         <input value={this.state.descricao} readOnly={true} className="form-control name-pull-image" type="text"></input>
                     </div>
                 </div>
-                <div className="col-2">
-                    Data de criação:
-                </div>
                 <div className="row mt-2">
-                    <div className="col-2">
+                    <div className="col-auto">
+                        Data de criação:
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-2">
                         <DatePicker value={this.state.dataCriacao} disabled={true}></DatePicker>
                     </div>
                 </div>
-                <div className="col-2">
-                    Data de renovação:
-                </div>
                 <div className="row mt-2">
-                    <div className="col-2">
+                    <div className="col-auto">
+                        Data de renovação:
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-2">
                         <DatePicker value={this.state.dataRenovacao} disabled={true}></DatePicker>
                     </div>
                 </div>
-                <div className="col-2">
-                    Líder:
-                </div>
                 <div className="row mt-2">
-                    <div className="col-3">
+                    <div className="col-auto">
+                        Líder:
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-3">
                         <input value={this.state.lider} readOnly={true} className="form-control name-pull-image" type="text"></input>
                     </div>
                 </div>
-                <div className="col-2">
-                    Membros:
+                <div className="row mt-2">
+                    <div className="md-2 col-2">
+                        Membros:
+                    </div>
                 </div>
                 <div>
-                    <table className="table mt-2">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Nome</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.membros && this.state.membros.map(membro => {
-                                return <tr key={membro.id}>
-                                    <th scope="row">{membro.id}</th>
-                                    <td>{membro.nomeCompleto}</td>
+                    <div className="table-responsive">
+                        <table className="table mt-2">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Nome</th>
                                 </tr>
-                            })}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {this.state.membros && this.state.membros.map(membro => {
+                                    return <tr key={membro.id}>
+                                        <th scope="row">{membro.id}</th>
+                                        <td>{membro.nomeCompleto}</td>
+                                    </tr>
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div className="row mt-2">
-                    <div className="col-1">
+                    <div className="col-auto">
                         <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
                     </div>
                 </div>
@@ -500,7 +531,7 @@ export default class Grupo extends Component {
                     <h5>Gerenciamento de membros</h5>
                 </div>
                 <div className="row mt-2 pt-3">
-                    <div className="col-4">
+                    <div className="col-md-4">
                         <Select
                             className="basic-single"
                             classNamePrefix="select"
@@ -516,7 +547,7 @@ export default class Grupo extends Component {
                     </div>
                 </div>
                 <div className="row mt-2 pt-2">
-                    <div className="col-4">
+                    <div className="col-md-4">
                         <Select
                             className="basic-single"
                             classNamePrefix="select"
@@ -526,35 +557,36 @@ export default class Grupo extends Component {
                             options={this.state.membros.map(m => ({ value: m.id, label: m.nomeCompleto }))}
                             value={liderSelecionado}>
                         </Select>
-                        <p>Líder atual: <strong>{this.state.grupoSelecionado.lider}</strong></p>
                     </div>
-                    <div className="col-2">
+                    <div className="col-md-2">
                         <button type="button" className="btn btn-outline-primary" onClick={() => this.escolherLider(this.state.grupoSelecionado, liderSelecionado.value)}>Escolher líder</button>
                     </div>
                 </div>
-                <div className="col-2">
+                <div className="col-md-2">
                     <button type="button" className="btn btn-outline-danger mt-2" onClick={() => this.esvaziarGrupo(this.state.grupoSelecionado)}>Esvaziar grupo</button>
                 </div>
-                <table className="table mt-2">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nome</th>
-                            <th scope="" className="col-1"></th>
-                            <th scope=""></th>
-                            <th scope=""></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.membros && this.state.membros.map(membro => {
-                            return <tr key={membro.id}>
-                                <th scope="row">{membro.id}</th>
-                                <td>{membro.nomeCompleto}</td>
-                                <td><button type="button" onClick={() => this.removerMembro(this.state.grupoSelecionado, membro)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remover membro"><i className="bi bi-person-x"></i></button></td>
+                <div className="table-responsive">
+                    <table className="table mt-2">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome</th>
+                                <th scope="" className="col-1"></th>
+                                <th scope=""></th>
+                                <th scope=""></th>
                             </tr>
-                        })}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {this.state.membros && this.state.membros.map(membro => {
+                                return <tr key={membro.id}>
+                                    <th scope="row">{membro.id}</th>
+                                    <td>{membro.nomeCompleto}</td>
+                                    <td><button type="button" onClick={() => this.removerMembro(this.state.grupoSelecionado, membro)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remover membro"><i className="bi bi-person-x"></i></button></td>
+                                </tr>
+                            })}
+                        </tbody>
+                    </table>
+                </div>
                 <div className="row mt-2">
                     <div className="col-1">
                         <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>

@@ -1,0 +1,28 @@
+hr{
+    margin-bottom: -2px;
+}
+
+td,
+tr{
+    vertical-align: middle;
+}
+
+.divisor{
+    margin-top: -16px;
+}
+
+.form-check-label:hover,
+.form-check-input:hover{
+    cursor: pointer;
+}
+
+.box-data .form-label{
+    margin-left: 100px;
+}
+.box-data #dataNascimento{
+    text-align: center;
+}
+
+.table-name{
+    margin-bottom: -5px;
+}

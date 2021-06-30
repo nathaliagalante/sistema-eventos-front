@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Inject, ScheduleComponent, Day, Week, WorkWeek, Month, Agenda } from '@syncfusion/ej2-react-schedule'
 import { loadCldr } from '@syncfusion/ej2-base'
+import './AgendaEventos.css';
 
 loadCldr(
     require('cldr-data/supplemental/numberingSystems.json'),
@@ -60,27 +61,27 @@ export default class AgendaEventos extends Component {
                             <h6>
                             {
                                 (props.dataInicio !== undefined && props.dataFim !== undefined) ?
-                                    <div className="data mt-2" data-toggle="tooltip" data-placement="top" title="Duração do evento"> <strong><i class="bi bi-calendar-check"></i>  </strong>{((props.dataInicio.getDate())) + "/" + ((props.dataInicio.getMonth() + 1)) + "/" + props.dataInicio.getFullYear() + " - " + ((props.dataFim.getDate())) + "/" + ((props.dataFim.getMonth() + 1)) + "/" + props.dataFim.getFullYear()}</div> : ""
+                                    <div className="data mt-2" data-toggle="tooltip" data-placement="top" title="Duração do evento"> <strong><i className="bi bi-calendar-check"></i>  </strong>{((props.dataInicio.getDate())) + "/" + ((props.dataInicio.getMonth() + 1)) + "/" + props.dataInicio.getFullYear() + " - " + ((props.dataFim.getDate())) + "/" + ((props.dataFim.getMonth() + 1)) + "/" + props.dataFim.getFullYear()}</div> : ""
                             }
                             {
                                 (props.descricao !== undefined) ?
-                                    <div className="descricao mt-3" data-toggle="tooltip" data-placement="top" title="Descrição"><i class="bi bi-file-text"></i> <strong>  </strong>{props.descricao}</div> : ""
+                                    <div className="descricao mt-3" data-toggle="tooltip" data-placement="top" title="Descrição"><i className="bi bi-file-text"></i> <strong>  </strong>{props.descricao}</div> : ""
                             }
                             {
                                 (props.localEvento !== undefined) ?
-                                    <div className="localEvento mt-3" data-toggle="tooltip" data-placement="top" title="Local"><i class="bi bi-geo-alt"></i><strong> </strong>{props.localEvento}</div> : ""
+                                    <div className="localEvento mt-3" data-toggle="tooltip" data-placement="top" title="Local"><i className="bi bi-geo-alt"></i><strong> </strong>{props.localEvento}</div> : ""
                             }
                             {
                                 (props.localInscricao !== undefined) ?
-                                    <div className="localInscricao mt-3" data-toggle="tooltip" data-placement="top" title="Local de inscrição"><i class="bi bi-signpost-split"></i><strong> </strong>{props.localInscricao}</div> : ""
+                                    <div className="localInscricao mt-3" data-toggle="tooltip" data-placement="top" title="Local de inscrição"><i className="bi bi-signpost-split"></i><strong> </strong>{props.localInscricao}</div> : ""
                             }
                             {
                                 (props.publicoAlvo !== undefined) ?
-                                    <div className="publicoAlvo mt-3" data-toggle="tooltip" data-placement="top" title="Público alvo"><i class="bi bi-person-lines-fill"></i><strong> </strong>{props.publicoAlvo}</div> : ""
+                                    <div className="publicoAlvo mt-3" data-toggle="tooltip" data-placement="top" title="Público alvo"><i className="bi bi-person-lines-fill"></i><strong> </strong>{props.publicoAlvo}</div> : ""
                             }
                             {
                                 (props.valorInvestimento !== undefined) ?
-                                    <div className="valorInvestimento mt-3" data-toggle="tooltip" data-placement="top" title="Valor de investimento"><i class="bi bi-wallet2"></i><strong> </strong> R$ {props.valorInvestimento}</div> : ""
+                                    <div className="valorInvestimento mt-3" data-toggle="tooltip" data-placement="top" title="Valor de investimento"><i className="bi bi-wallet2"></i><strong> </strong> R$ {props.valorInvestimento}</div> : ""
                             }
                             </h6>
                         </div>
@@ -94,7 +95,7 @@ export default class AgendaEventos extends Component {
     render() {
         return (
             <div className="mt-5 pt-3">
-                <ScheduleComponent currentView='Month' readonly={true} width='100%' height='593px' locale='pt' eventSettings={{
+                <ScheduleComponent currentView='Month' readonly={true} width='100%' height='550px' locale='pt' eventSettings={{
                     dataSource: this.state.eventos,
                     fields: {
                         id: 'id',

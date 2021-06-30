@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router'
 
 export default class Home extends Component {
     render(){
         return(
-            <div className="mt-5 pt-5">
-                <h3>Teste</h3>
+            <div>
+                <Redirect to="/agenda"></Redirect>
             </div>
         )
     }

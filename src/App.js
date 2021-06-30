@@ -6,6 +6,7 @@ import Login from './login/Login'
 import Usuario from './usuario/Usuario'
 import AgendaEventos from './agendaeventos/AgendaEventos'
 import Evento from './eventos/Evento'
+import Home from './home/Home'
 
 export default class App extends Component {
 
@@ -53,7 +54,7 @@ export default class App extends Component {
             <Route path="/grupo">
               <Grupo />
             </Route>
-            <Route exact path="/agenda">
+            <Route path="/agenda">
               <AgendaEventos />
             </Route>
             <Route path="/usuario">
@@ -63,9 +64,11 @@ export default class App extends Component {
               <Evento />
             </Route>
           </Switch>
+
+          <Home />
+
         </div>
       </BrowserRouter>
-
-        )
+      )
     }
 }

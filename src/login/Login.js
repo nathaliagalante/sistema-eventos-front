@@ -51,7 +51,7 @@ export default class Login extends Component {
                             </div>
     
                             <div className="form-group">
-                                <button type="button" onClick={() => this.handleLogin()} className="btn btn-primary mt-2" >Entrar</button>
+                                <button type="button" onClick={() => this.handleLogin()} className="btn btn-primary mt-2 form-control">Entrar</button>
                             </div>
                         </form>
                         

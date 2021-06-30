@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Inject, ScheduleComponent, Day, Week, WorkWeek, Month, Agenda } from '@syncfusion/ej2-react-schedule'
 import { loadCldr } from '@syncfusion/ej2-base'
 import './AgendaEventos.css';
+import { L10n } from '@syncfusion/ej2-base'
 
 loadCldr(
     require('cldr-data/supplemental/numberingSystems.json'),
@@ -9,6 +10,37 @@ loadCldr(
     require('cldr-data/main/pt/numbers.json'),
     require('cldr-data/main/pt/timeZoneNames.json')
 );
+
+L10n.load({
+    'pt':{
+        'schedule': {
+            'day': 'Dia',
+            'week': 'Semana',
+            'workWeek': 'Dias úteis',
+            'month': 'Mês',
+            'today': 'Hoje',
+            'agenda': 'Agenda',
+            'noEvents': 'Não há eventos',
+            'allDay': 'Dia todo',
+            'weekAgenda': 'Agenda da semana',
+            'monthAgenda': 'Agenda do mês',
+            'workWeekAgenda': 'Agenda da semana útil',
+            'emptyContainer': 'Não há eventos agendados nesse dia',
+            'start': 'Início',
+            'end': 'Fim',
+            'more': 'Mais',
+            'close': 'Fechar',
+            'cancel': 'Cancelar',
+            'noTitle': 'Sem título',
+            'delete': 'Deletar',
+            'edit': 'Editar',
+            'moreDetails': 'Mais detalhes',
+            'save': 'Salvar',
+            'previous': 'Anterior',
+            'next': 'Próximo'
+        }
+    }
+});
 
 export default class AgendaEventos extends Component {
     state = {

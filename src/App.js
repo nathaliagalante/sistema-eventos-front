@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Menu from './menu/Menu'
-import { BrowserRouter, Route, Switch} from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Grupo from './grupo/Grupo'
 import Login from './login/Login'
 import Usuario from './usuario/Usuario'
@@ -13,19 +13,19 @@ export default class App extends Component {
   state = {
     login: '',
     senha: '',
-    usuario: [], 
+    usuario: [],
     autenticou: false
   }
 
   autenticar = (usuarioLogin, usuarioSenha) => {
 
-  const url = window.servidor + '/usuario/login/' + usuarioLogin + '/' + usuarioSenha;
+    const url = window.servidor + '/usuario/login/' + usuarioLogin + '/' + usuarioSenha;
 
-  fetch(url)
+    fetch(url)
       .then(response => response.json())
-      .then( data => {
-        this.setState({usuario: data})
-        this.setState({login: usuarioLogin, senha: usuarioSenha, autenticou: true});
+      .then(data => {
+        this.setState({ usuario: data })
+        this.setState({ login: usuarioLogin, senha: usuarioSenha, autenticou: true });
         console.log(data);
         return true
       })
@@ -34,7 +34,7 @@ export default class App extends Component {
         return false;
       });
 
-      return true;
+    return true;
   }
 
   logout = () => {

@@ -16,13 +16,19 @@ tr{
     cursor: pointer;
 }
 
-.box-data .form-label{
+.box-center .form-label{
     margin-left: 100px;
 }
-.box-data #dataNascimento{
+.box-center #dataNascimento{
     text-align: center;
 }
 
 .table-name{
     margin-bottom: -5px;
+}
+
+img{
+    height: 100%;
+    width: auto;
+    max-height: 120px;
 }

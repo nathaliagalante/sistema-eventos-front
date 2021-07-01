@@ -222,7 +222,7 @@ export default class Evento extends Component {
                             <input value={this.state.ano} placeholder="Ano" type="number" className="form-control" onChange={this.txtAno_change}></input>
                         </div>
                         
-                        <div className="col-md-6">
+                        <div className="col-auto">
                             <button type="button" className="btn btn-outline-primary" onClick={() => this.gerarAniversarios(this.state.ano)}>Gerar aniversários</button>
                         </div>
                     </div>

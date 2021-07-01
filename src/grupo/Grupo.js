@@ -24,6 +24,8 @@ export default class Grupo extends Component {
         lider: ""
     }
 
+    /* ------------------------------------------------- SET STATE --------------------------------------------- */
+
     handleChange = (valor) => {
         console.log('Opção selecionada', valor)
         this.setState({ opcaoSelecionada: valor },
@@ -56,6 +58,9 @@ export default class Grupo extends Component {
         this.setState({ dataRenovacao: date })
     }
 
+    /* ------------------------------------------------- FUNCIONALIDADES --------------------------------------------- */
+
+    /* ----- PREENCHER LISTA DE GRUPOS ----- */
     preencherListaGrupo = () => {
         const url = window.servidor + '/grupo/consultar'
         fetch(url)
@@ -63,6 +68,7 @@ export default class Grupo extends Component {
             .then(data => this.setState({ grupos: data }));
     }
 
+    /* ----- PREENCHER LISTA DE MEMBROS ----- */
     preencherListaMembros = (grupo) => {
         const url = window.servidor + '/grupo/gerenciar/' + grupo.id + '/listar'
         fetch(url)
@@ -71,6 +77,7 @@ export default class Grupo extends Component {
             .then(data => this.setState({ membros: data }));
     }
 
+    /* ----- PREENCHER COMBOBOX USUARIOS ----- */
     preencherComboboxUsuarios = () => {
         const url = window.servidor + '/grupo/gerenciar/listargroupless'
         fetch(url)
@@ -78,6 +85,7 @@ export default class Grupo extends Component {
             .then(data => this.setState({ usuariosSemGrupo: data }))
     }
 
+    /* ----- PREENCHER COMBOBOX LIDER ----- */
     preencherComboboxLider = (grupo) => {
         const url = window.servidor + '/grupo/gerenciar/' + grupo.id + '/listar'
         fetch(url)
@@ -90,22 +98,26 @@ export default class Grupo extends Component {
         this.preencherListaGrupo()
     }
 
+    /* ----- CADASTRAR GRUPO ----- */
     cadastrarNovo = () => {
         this.setState({ incluindo: true, nome: '', descricao: '' })
     }
 
+    /* ----- ALTERAR GRUPO ----- */
     alterarNovo = (grupo) => {
         var dataConvertida = new Date(grupo.dataRenovacao);
         dataConvertida.setDate(dataConvertida.getDate() + 1)
         this.setState({ alterando: true, nome: grupo.nome, id: grupo.id, descricao: grupo.descricao, dataRenovacao: dataConvertida })
     }
 
+    /* ----- GERENCIAR GRUPO ----- */
     gerenciarGrupo = (grupo) => {
         this.setState({ gerenciando: true, grupoSelecionado: grupo, opcaoSelecionada: null, liderSelecionado: null })
         this.preencherListaMembros(grupo)
         this.preencherComboboxUsuarios()
     }
 
+    /* ----- VER DETALHES ----- */
     verDetalhes = (grupo) => {
         var dataRenovacaoConvertida = new Date(grupo.dataRenovacao);
         var dataCriacaoConvertida = new Date(grupo.dataCriacao);
@@ -115,6 +127,7 @@ export default class Grupo extends Component {
         this.preencherListaMembros(grupo)
     }
 
+    /* ----- GRAVAR NOVO GRUPO ----- */
     gravarNovo = () => {
         const dados = {
             "nome": this.state.nome,
@@ -144,6 +157,7 @@ export default class Grupo extends Component {
             .catch(erro => console.log(erro));
     }
 
+    /* ----- GRAVAR ALTERAÇÃO ----- */
     gravarAlterar = () => {
         const dados = {
             "id": this.state.id,
@@ -171,6 +185,7 @@ export default class Grupo extends Component {
             .catch(erro => console.log(erro));
     }
 
+    /* ----- EXCLUIR GRUPO ----- */
     excluirGrupo = (grupo) => {
 
         const requestOptions = {
@@ -189,6 +204,7 @@ export default class Grupo extends Component {
             .catch(erro => console.log(erro));
     }
 
+    /* ----- ESVAZIAR GRUPO ----- */
     esvaziarGrupo = (grupo) => {
         const requestOptions = {
             method: 'POST',
@@ -207,6 +223,7 @@ export default class Grupo extends Component {
             .catch(erro => console.log(erro));
     }
 
+    /* ----- ADICIONAR MEMBRO ----- */
     adicionarMembro = (grupo, id_membro) => {
         const requestOptions = {
             method: 'POST',
@@ -225,6 +242,7 @@ export default class Grupo extends Component {
             .catch(erro => console.log(erro));
     }
 
+    /* ----- REMOVER MEMBRO ----- */
     removerMembro = (grupo, membro) => {
         const requestOptions = {
             method: 'POST',
@@ -243,6 +261,7 @@ export default class Grupo extends Component {
             .catch(erro => console.log(erro));
     }
 
+    /* ----- ESCOLHER LÍDER ----- */
     escolherLider = (grupo, id_membro) => {
         const requestOptions = {
             method: 'POST',
@@ -262,6 +281,7 @@ export default class Grupo extends Component {
             .catch(erro => console.log(erro));
     }
 
+    /* ----- BOTÃO VOLTAR ----- */
     voltar = () => {
         this.setState({ incluindo: false, alterando: false, gerenciando: false, detalhes: false, dataRenovacao: new Date() })
         this.preencherListaGrupo()
@@ -537,7 +557,6 @@ export default class Grupo extends Component {
                     <button type="button" className="btn btn-outline-danger mt-2" onClick={() => this.esvaziarGrupo(this.state.grupoSelecionado)}>Esvaziar grupo</button>
                 </div>
 
-                
                 <div className="table-responsive">
                     <label className="form-label">Membros</label>
                     <table className="table table-bordered">

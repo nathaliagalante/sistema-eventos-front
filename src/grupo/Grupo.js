@@ -21,6 +21,7 @@ export default class Grupo extends Component {
         opcaoSelecionada: null,
         liderSelecionado: null,
         detalhes: false,
+        administrador: "",
         lider: ""
     }
 
@@ -95,7 +96,8 @@ export default class Grupo extends Component {
     }
 
     componentDidMount() {
-        this.preencherListaGrupo()
+        this.preencherListaGrupo();
+        this.carregarDadosLogin();
     }
 
     /* ----- CADASTRAR GRUPO ----- */
@@ -287,6 +289,13 @@ export default class Grupo extends Component {
         this.preencherListaGrupo()
     }
 
+    carregarDadosLogin = () => {
+        const url = window.servidor + '/usuario/login/visualizar'
+        fetch(url)
+            .then(response => response.json())
+            .then(data => this.setState({ administrador: data }));
+    }
+
 
     /* ------------------------------------------------- TELA CADASTRAR GRUPO --------------------------------------------- */
     renderCadastrarGrupo = () => {
@@ -317,7 +326,7 @@ export default class Grupo extends Component {
                 
                 <div className="row mt-3">
                     <div className="col-2">
-                        <button className="btn btn-primary" onClick={() => this.gravarNovo()}>Gravar</button>
+                        <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarNovo()}>Gravar</button>
                     </div>
                     <div className="col-2">
                         <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
@@ -338,7 +347,7 @@ export default class Grupo extends Component {
                     <hr></hr>
                 </div>
                 <div className="col-2 mt-3 mb-3">
-                    <button type="button" className="btn btn-outline-primary mt-2" onClick={() => this.cadastrarNovo()}>Cadastrar</button>
+                    <button type="button" className="btn btn-outline-primary mt-2" hidden={!this.state.administrador.isAdm} onClick={() => this.cadastrarNovo()}>Cadastrar</button>
                 </div>
 
                 <div class="table-responsive">
@@ -371,9 +380,9 @@ export default class Grupo extends Component {
                                     <td>{grupo.lider}</td>
                                     <td>{grupo.descricao}</td>
                                     <td><button type="button" onClick={() => this.verDetalhes(grupo)} className="btn btn-success" data-toggle="tooltip" data-placement="top" title="Ver Mais"><i className="bi bi-three-dots"></i></button></td>
-                                    <td><button type="button" onClick={() => this.alterarNovo(grupo)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar grupo"><i className="bi bi-pencil-square"></i></button></td>
-                                    <td><button type="button" onClick={() => this.gerenciarGrupo(grupo)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Gerenciar membros"><i className="bi bi-person-plus"></i></button></td>
-                                    <td><button type="button" onClick={() => this.excluirGrupo(grupo)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir grupo"><i className="bi bi-trash"></i></button></td>
+                                    <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.alterarNovo(grupo)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar grupo"><i className="bi bi-pencil-square"></i></button></td>
+                                    <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.gerenciarGrupo(grupo)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Gerenciar membros"><i className="bi bi-person-plus"></i></button></td>
+                                    <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.excluirGrupo(grupo)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir grupo"><i className="bi bi-trash"></i></button></td>
                                 </tr>
                             })}
                         </tbody>
@@ -418,7 +427,7 @@ export default class Grupo extends Component {
                 
                 <div className="row mt-4">
                     <div className="col-md-2">
-                        <button className="btn btn-primary" onClick={() => this.gravarAlterar()}>Gravar</button>
+                        <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarAlterar()}>Gravar</button>
                     </div>
                     <div className="col-md-2">
                         <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
@@ -532,7 +541,7 @@ export default class Grupo extends Component {
                         </Select>
                     </div>
                     <div className="col-2">
-                        <button type="button" className="btn btn-outline-primary" onClick={() => this.adicionarMembro(this.state.grupoSelecionado, opcaoSelecionada.value)}>Adicionar</button>
+                        <button type="button" hidden={!this.state.administrador.isAdm} className="btn btn-outline-primary" onClick={() => this.adicionarMembro(this.state.grupoSelecionado, opcaoSelecionada.value)}>Adicionar</button>
                     </div>
                 </div>
 
@@ -549,12 +558,12 @@ export default class Grupo extends Component {
                         </Select>
                     </div>
                     <div className="col-md-2">
-                        <button type="button" className="btn btn-outline-primary" onClick={() => this.escolherLider(this.state.grupoSelecionado, liderSelecionado.value)}>Escolher líder</button>
+                        <button type="button" className="btn btn-outline-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.escolherLider(this.state.grupoSelecionado, liderSelecionado.value)}>Escolher líder</button>
                     </div>
                 </div>
 
                 <div className="col-md-2">
-                    <button type="button" className="btn btn-outline-danger mt-2" onClick={() => this.esvaziarGrupo(this.state.grupoSelecionado)}>Esvaziar grupo</button>
+                    <button type="button" className="btn btn-outline-danger mt-2" hidden={!this.state.administrador.isAdm} onClick={() => this.esvaziarGrupo(this.state.grupoSelecionado)}>Esvaziar grupo</button>
                 </div>
 
                 <div className="table-responsive">
@@ -574,7 +583,7 @@ export default class Grupo extends Component {
                                 return <tr key={membro.id}>
                                     <th scope="row">{membro.id}</th>
                                     <td>{membro.nomeCompleto}</td>
-                                    <td><button type="button" onClick={() => this.removerMembro(this.state.grupoSelecionado, membro)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remover membro"><i className="bi bi-person-x"></i></button></td>
+                                    <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.removerMembro(this.state.grupoSelecionado, membro)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remover membro"><i className="bi bi-person-x"></i></button></td>
                                 </tr>
                             })}
                         </tbody>

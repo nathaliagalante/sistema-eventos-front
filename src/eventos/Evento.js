@@ -16,6 +16,7 @@ export default class Evento extends Component {
         alterando: false,
         eventoSelecionado: "",
         ano: "",
+        administrador: "",
         detalhes: false
     }
 
@@ -69,7 +70,8 @@ export default class Evento extends Component {
     }
 
     componentDidMount() {
-        this.preencherListaEvento()
+        this.preencherListaEvento();
+        this.carregarDadosLogin();
     }
 
     /* ----- CADASTRAR EVENTO ----- */
@@ -202,6 +204,13 @@ export default class Evento extends Component {
 
     }
 
+carregarDadosLogin = () => {
+        const url = window.servidor + '/usuario/login/visualizar'
+        fetch(url)
+            .then(response => response.json())
+            .then(data => this.setState({ administrador: data }));
+    }
+    
     /* ----------------------------------------------- TELA LISTA EVENTOS --------------------------------------------- */
     renderListaEventos = () => {
         return (
@@ -214,7 +223,7 @@ export default class Evento extends Component {
 
                 <div className="mt-3 mb-3 d-flex justify-content-between">
                     <div className="col-md-2">
-                        <button type="button" className="btn btn-outline-primary" onClick={() => this.cadastrarNovo()}>Cadastrar</button>
+                        <button type="button" hidden={!this.state.administrador.isAdm} className="btn btn-outline-primary" onClick={() => this.cadastrarNovo()}>Cadastrar</button>
                     </div>
 
                     <div className="d-flex justify-content-around">
@@ -222,8 +231,8 @@ export default class Evento extends Component {
                             <input value={this.state.ano} placeholder="Ano" type="number" className="form-control" onChange={this.txtAno_change}></input>
                         </div>
                         
-                        <div className="col-auto">
-                            <button type="button" className="btn btn-outline-primary" onClick={() => this.gerarAniversarios(this.state.ano)}>Gerar aniversários</button>
+                        <div className="col-md-6">
+                            <button type="button" hidden={!this.state.administrador.isAdm} className="btn btn-outline-primary" onClick={() => this.gerarAniversarios(this.state.ano)}>Gerar aniversários</button>
                         </div>
                     </div>
                     
@@ -256,8 +265,8 @@ export default class Evento extends Component {
                                     <td>{((dataFimConvertida.getDate())) + "/" + ((dataFimConvertida.getMonth() + 1)) + "/" + dataFimConvertida.getFullYear()}</td>
                                     <td>{evento.localEvento}</td>
                                     <td><button type="button" onClick={() => this.verDetalhes(evento)} className="btn btn-success" data-toggle="tooltip" data-placement="top" title="Ver Mais"><i className="bi bi-three-dots"></i></button></td>
-                                    <td><button type="button" onClick={() => this.alterarEvento(evento)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar evento"><i className="bi bi-pencil-square"></i></button></td>
-                                    <td><button type="button" onClick={() => this.excluirEvento(evento)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir evento"><i className="bi bi-trash"></i></button></td>
+                                    <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.alterarEvento(evento)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar evento"><i className="bi bi-pencil-square"></i></button></td>
+                                    <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.excluirEvento(evento)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir evento"><i className="bi bi-trash"></i></button></td>
                                 </tr>
                             })}
                         </tbody>
@@ -331,7 +340,7 @@ export default class Evento extends Component {
                 
                 <div className="row mt-4">
                     <div className="col-2">
-                        <button className="btn btn-primary" onClick={() => this.gravarAlterar(this.state.eventoSelecionado)}>Gravar</button>
+                        <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarAlterar(this.state.eventoSelecionado)}>Gravar</button>
                     </div>
                     <div className="col-2">
                         <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
@@ -470,7 +479,7 @@ export default class Evento extends Component {
                 
                 <div className="row mt-4">
                     <div className="col-sm-2">
-                        <button className="btn btn-primary" onClick={() => this.gravarNovo()}>Gravar</button>
+                        <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarNovo()}>Gravar</button>
                     </div>
                     <div className="col-sm-2">
                         <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>

@@ -17,6 +17,23 @@ export default class Login extends Component {
         this.setState({senha: event.target.value});
     }
 
+    componentDidMount() {
+        this.logout();
+    }
+
+    logout = () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        };
+
+        const url = window.servidor + '/usuario/logout'
+
+        fetch(url, requestOptions);
+    }
+
     handleLogin = () => {
        let res = this.props.logar(this.state.login, this.state.senha);
 

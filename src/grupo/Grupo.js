@@ -307,12 +307,12 @@ export default class Grupo extends Component {
                     <hr></hr>
                 </div>
 
-                <div className="col-12">
+                <div className="col-md-12">
                     <label for="nome" className="form-label">Nome</label>
                     <input value={this.state.nome} onChange={this.txtNome_change} className="form-control" type="text"></input>
                 </div>
                 
-                <div className="col-12">
+                <div className="col-md-12">
                     <label for="descricao" className="form-label">Descrição</label>
                     <input value={this.state.descricao} onChange={this.txtDescricao_change} className="form-control name-pull-image" type="text"></input>
                 </div>
@@ -325,10 +325,10 @@ export default class Grupo extends Component {
                 </div>
                 
                 <div className="row mt-3">
-                    <div className="col-2">
+                    <div className="col-auto mb-3">
                         <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarNovo()}>Gravar</button>
                     </div>
-                    <div className="col-2">
+                    <div className="col-auto mb-3">
                         <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
                     </div>
                 </div>
@@ -426,10 +426,10 @@ export default class Grupo extends Component {
                 </div>
                 
                 <div className="row mt-4">
-                    <div className="col-md-2">
+                    <div className="col-auto mb-3">
                         <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarAlterar()}>Gravar</button>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-auto mb-3">
                         <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
                     </div>
                 </div>
@@ -507,7 +507,7 @@ export default class Grupo extends Component {
                 </div>
 
                 <div className="row">
-                    <div className="col-2">
+                    <div className="col-auto mb-3">
                         <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
                     </div>
                 </div>
@@ -540,7 +540,7 @@ export default class Grupo extends Component {
                             value={opcaoSelecionada}>
                         </Select>
                     </div>
-                    <div className="col-2">
+                    <div className="col-auto">
                         <button type="button" hidden={!this.state.administrador.isAdm} className="btn btn-outline-primary" onClick={() => this.adicionarMembro(this.state.grupoSelecionado, opcaoSelecionada.value)}>Adicionar</button>
                     </div>
                 </div>
@@ -557,7 +557,7 @@ export default class Grupo extends Component {
                             value={liderSelecionado}>
                         </Select>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-auto">
                         <button type="button" className="btn btn-outline-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.escolherLider(this.state.grupoSelecionado, liderSelecionado.value)}>Escolher líder</button>
                     </div>
                 </div>
@@ -568,14 +568,12 @@ export default class Grupo extends Component {
 
                 <div className="table-responsive">
                     <label className="form-label">Membros</label>
-                    <table className="table table-bordered">
+                    <table className="table mt-2">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Nome</th>
                                 <th scope="" className="col-1"></th>
-                                <th scope=""></th>
-                                <th scope=""></th>
                             </tr>
                         </thead>
                         <tbody>

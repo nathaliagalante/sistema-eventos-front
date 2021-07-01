@@ -7,20 +7,10 @@ tr{
     vertical-align: middle;
 }
 
-.divisor{
-    margin-top: -16px;
-}
 
 .form-check-label:hover,
 .form-check-input:hover{
     cursor: pointer;
-}
-
-.box-center .form-label{
-    margin-left: 100px;
-}
-.box-center #dataNascimento{
-    text-align: center;
 }
 
 .table-name{

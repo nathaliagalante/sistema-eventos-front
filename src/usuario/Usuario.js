@@ -377,7 +377,7 @@ export default class Usuario extends Component {
             <div className="container">
             <div className="row mt-5 pt-4 g-3">
                 <div className="col-12">
-                    <h5>Cadastro de Usuário</h5>
+                    <h4>Cadastrar Usuário</h4>
                     <hr></hr>
                 </div>
 
@@ -386,7 +386,8 @@ export default class Usuario extends Component {
                     <input value={this.state.nomeCompleto} onChange={this.txtNomeCompleto_change} className="form-control" type="text" id="nome"></input>
                 </div>
 
-                <div className="col-md-4">
+                
+                <div className="col-md-4 mt-4 mb-4">
                     <label>Foto de Perfil</label>
                     <div className="row mt-2">
                         <figure className="figure">
@@ -396,16 +397,17 @@ export default class Usuario extends Component {
                     <input className="form-control-sm" id="formFileSm" type="file" accept="image/*" onChange={this.foto_change}/>
                 </div>
 
-                <div className="col-md-4">
+                <div className="col-md-4 mt-4 mb-4">
                     <label for="sexo" className="form-label">Sexo</label>
                     <div className="row">
-                        <div className="col-md-4">
+                        <div className="col-auto">
                             <div className="form-check form-check-inline">
                                 <input className="form-check-input" type="radio" name="sexo" id="sexoMasc" value="Masculino" onChange={this.txtSexo_change} checked></input>
                                 <label className="form-check-label" for="sexoMasc">Masculino</label>
                             </div>
                         </div> 
-                        <div className="col-md-4">
+
+                        <div className="col-auto">
                             <div class="form-check form-check-inline">
                                 <input className="form-check-input" type="radio" name="sexo" id="sexoFem" value="Feminino"  onChange={this.txtSexo_change}></input>
                                 <label className="form-check-label" for="sexoFem">Feminino</label>
@@ -414,13 +416,13 @@ export default class Usuario extends Component {
                     </div>
                 </div>
 
-                <div className="col-md-4 box-center">
+                <div className="col-md-4 mt-4 mb-4">
                     <label for="dataNascimento" className="form-label">Data de Nascimento</label> 
                     <div className="" id="dataNascimento">
                         <DatePicker value={this.state.dataNascimento} onChange={this.dataNascimento_change}></DatePicker>
                     </div>
                 </div>
-
+                
                 <div className="col-12">
                     <label for="endereco" className="form-label">Endereço</label>
                     <input value={this.state.endereco} onChange={this.txtEndereco_change} className="form-control" type="text" id="endereco"></input> 
@@ -449,13 +451,14 @@ export default class Usuario extends Component {
                     </Select>
                 </div>
 
-                <div className="col-2 mt-3 mb-3">
+                <div className="mt-3 mb-3 col-md-2 col-lg-2">
                     <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarNovo()}>Gravar</button>
                 </div>
 
-                <div className="col-2 mt-3 mb-3">
+                <div className="mt-3 mb-3 col-md-2 col-lg-2">
                     <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.voltar()}>Voltar</button>
                 </div>
+                
                 
             </div>
             </div>
@@ -469,7 +472,7 @@ export default class Usuario extends Component {
             <div className="container">
             <div className="row mt-5 pt-3 g-4">
                 <div className="col-12">
-                    <h5>Alteração de Usuário</h5>
+                    <h4>Editar Usuário</h4>
                     <hr></hr>
                 </div>
 
@@ -494,27 +497,27 @@ export default class Usuario extends Component {
                 </div>
 
                 <div className="col-md-4">
+                    <label for="dataNascimento" className="form-label">Data de Nascimento</label>
+                    <div className="mt-1" id="dataNascimento">
+                        <DatePicker value={this.state.dataNascimento} onChange={this.dataNascimento_change}></DatePicker>
+                    </div>
+                </div>
+
+                <div className="col-md-4">
                     <label for="sexo" className="form-label">Sexo</label>
                     <div className="row">
-                        <div className="col-md-4">
+                        <div className="col-md-6 col-lg-4">
                             <div className="form-check form-check-inline">
                                 <input className="form-check-input" type="radio" name="sexo" id="sexoMasc" value="Masculino" defaultChecked={!this.state.sexobool} onChange={this.txtSexo_change}></input>
                                 <label className="form-check-label" for="sexoMasc">Masculino</label>
                             </div>
                         </div> 
-                        <div className="col-md-4">
+                        <div className="col-md-6 col-lg-4">
                             <div class="form-check form-check-inline">
                                 <input className="form-check-input" type="radio" name="sexo" id="sexoFem" value="Feminino" defaultChecked={this.state.sexobool} onChange={this.txtSexo_change}></input>
                                 <label className="form-check-label" for="sexoFem">Feminino</label>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div className="col-md-4 box-center">
-                    <label for="dataNascimento" className="form-label">Data de Nascimento</label>
-                    <div className="mt-1" id="dataNascimento">
-                        <DatePicker value={this.state.dataNascimento} onChange={this.dataNascimento_change}></DatePicker>
                     </div>
                 </div>
 
@@ -547,14 +550,13 @@ export default class Usuario extends Component {
                     </Select>
                 </div>
 
-                <div className="row mt-4">
-                    <div className="col-2">
-                        <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarAlterar()}>Gravar</button>
-                    </div>
-                    <div className="col-2">
-                        <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.voltar()}>Voltar</button>
-                    </div>
+                <div className="mt-3 mb-3 col-md-2 col-lg-2">
+                    <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarAlterar()}>Gravar</button>
                 </div>
+                <div className="mt-3 mb-3 col-md-2 col-lg-2">
+                    <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.voltar()}>Voltar</button>
+                </div>
+                
             </div>
             </div>
         )
@@ -580,6 +582,7 @@ export default class Usuario extends Component {
                     <input value={this.state.nomeCompleto} readOnly={true} className="form-control" type="text" id="nome"></input>
                 </div>
 
+                
                 <div className="col-md-4">
                     <label>Foto de Perfil</label>
                     <div className="row mt-2">
@@ -590,15 +593,15 @@ export default class Usuario extends Component {
                 </div>
 
                 <div className="col-md-4">
-                    <label for="sexo" className="form-label">Sexo</label>
-                    <input value={this.state.sexo} readOnly={true} className="form-control" type="text" id="sexo"></input>
-                </div>
-
-                <div className="col-md-4 box-center">
                     <label for="dataNascimento" className="form-label">Data de Nascimento</label>
                     <div className="mt-1" id="dataNascimento">
                         <DatePicker value={this.state.dataNascimento} disabled={true}></DatePicker>
                     </div>
+                </div>
+
+                <div className="col-md-4">
+                    <label for="sexo" className="form-label">Sexo</label>
+                    <input value={this.state.sexo} readOnly={true} className="form-control" type="text" id="sexo"></input>
                 </div>
 
                 <div className="col-12">
@@ -661,11 +664,10 @@ export default class Usuario extends Component {
                     </table>
                 </div>
                 
-                <div className="row">
-                    <div className="col-2 mb-3">
-                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
-                    </div>
+                <div className="mt-1 mb-3 col-md-2 col-lg-2">
+                    <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
                 </div>
+                
             </div>
             </div>
         )
@@ -678,7 +680,7 @@ export default class Usuario extends Component {
             <div className="container">
             <div className="row mt-5 pt-4 g-4">
                 <div className="col-12">
-                    <h5>Gerenciamento de Usuário</h5>
+                    <h5>Gerenciar Usuário</h5>
                     <hr></hr>
                 </div>
 
@@ -726,11 +728,11 @@ export default class Usuario extends Component {
                     <h5>Telefones</h5>
                     <div className="row">
                         <div class="col-md-2">
-                            <input placeholder="DDD" value={this.state.telefoneDDD} onChange={this.txtTelefoneDDD_change} className="form-control" type="text"></input>
+                            <input placeholder="DDD" value={this.state.telefoneDDD} onChange={this.txtTelefoneDDD_change} className="form-control" type="number" pattern="[0-9]"></input>
                         </div>
         
                         <div class="col-md-3">
-                            <input placeholder="Número" value={this.state.telefoneNumero} onChange={this.txtTelefoneNumero_change} className="form-control" type="text"></input>
+                            <input placeholder="Número" value={this.state.telefoneNumero} onChange={this.txtTelefoneNumero_change} className="form-control" type="number" pattern="[0-9]"></input>
                         </div>
 
                         <div class="col-md-3">
@@ -758,11 +760,10 @@ export default class Usuario extends Component {
                     </table>
                 </div>
 
-                <div className="row">
-                    <div className="col-2">
-                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
-                    </div>
+                <div className="mt-3 mb-3 col-md-2 col-lg-2">
+                    <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
                 </div>
+                
             </div>
             </div>
         )
@@ -777,7 +778,7 @@ export default class Usuario extends Component {
                     <h4>Usuários</h4>
                     <hr></hr>
                 </div>
-                <div className="col-2 mt-3 mb-3">
+                <div className="mt-3 mb-3 col-sm-4 col-md-2">
                     <button type="button" className="btn btn-outline-primary mt-2" hidden={!this.state.administrador.isAdm} onClick={() => this.cadastrarNovo()}>Cadastrar</button>
                 </div>
                 <div class="table-responsive"></div>

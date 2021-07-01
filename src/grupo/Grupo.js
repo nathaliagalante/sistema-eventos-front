@@ -324,14 +324,13 @@ export default class Grupo extends Component {
                     </div>
                 </div>
                 
-                <div className="row mt-3">
-                    <div className="col-2">
-                        <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarNovo()}>Gravar</button>
-                    </div>
-                    <div className="col-2">
-                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
-                    </div>
+                <div className="mt-3 mb-3 col-sm-4 col-md-2">
+                    <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarNovo()}>Gravar</button>
                 </div>
+                <div className="mt-3 mb-3 col-sm-4 col-md-2">
+                    <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
+                </div>
+                
             </div>
             </div>
         )
@@ -346,7 +345,7 @@ export default class Grupo extends Component {
                     <h4>Grupos</h4>
                     <hr></hr>
                 </div>
-                <div className="col-2 mt-3 mb-3">
+                <div className="mt-3 mb-3 col-sm-4 col-md-2">
                     <button type="button" className="btn btn-outline-primary mt-2" hidden={!this.state.administrador.isAdm} onClick={() => this.cadastrarNovo()}>Cadastrar</button>
                 </div>
 
@@ -425,14 +424,13 @@ export default class Grupo extends Component {
                     </div>
                 </div>
                 
-                <div className="row mt-4">
-                    <div className="col-md-2">
-                        <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarAlterar()}>Gravar</button>
-                    </div>
-                    <div className="col-md-2">
-                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
-                    </div>
+                <div className="mt-3 mb-3 col-sm-4 col-md-2">
+                    <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarAlterar()}>Gravar</button>
                 </div>
+                <div className="mt-3 mb-3 col-sm-4 col-md-2">
+                    <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
+                </div>
+                
             </div>
             </div>
         )
@@ -506,12 +504,10 @@ export default class Grupo extends Component {
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-2">
-                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
-                    </div>
+                <div className="mt-3 mb-3 col-sm-4 col-md-2">
+                    <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
                 </div>
-                
+                 
             </div>
             </div>
         )
@@ -524,12 +520,12 @@ export default class Grupo extends Component {
             <div className="container">
             <div className="row mt-5 pt-4 g-4">
                 <div className="col-12">
-                    <h4>Gerenciamento de Membros</h4>
+                    <h4>Gerenciar Membros</h4>
                     <hr></hr>
                 </div>
 
                 <div className="row mt-4 pt-2">
-                    <div className="col-md-4">
+                    <div className="col-md-4 mt-1">
                         <Select
                             className="basic-single"
                             classNamePrefix="select"
@@ -540,13 +536,13 @@ export default class Grupo extends Component {
                             value={opcaoSelecionada}>
                         </Select>
                     </div>
-                    <div className="col-2">
+                    <div className="col-sm-4 col-md-4 col-lg-2 mt-1">
                         <button type="button" hidden={!this.state.administrador.isAdm} className="btn btn-outline-primary" onClick={() => this.adicionarMembro(this.state.grupoSelecionado, opcaoSelecionada.value)}>Adicionar</button>
                     </div>
                 </div>
 
                 <div className="row mt-2 pt-2">
-                    <div className="col-md-4">
+                    <div className="col-md-4 mt-1">
                         <Select
                             className="basic-single"
                             classNamePrefix="select"
@@ -557,14 +553,17 @@ export default class Grupo extends Component {
                             value={liderSelecionado}>
                         </Select>
                     </div>
-                    <div className="col-md-2">
+                    <div className="col-sm-4 col-md-4 col-lg-2 mt-1">
                         <button type="button" className="btn btn-outline-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.escolherLider(this.state.grupoSelecionado, liderSelecionado.value)}>Escolher líder</button>
                     </div>
                 </div>
 
-                <div className="col-md-2">
-                    <button type="button" className="btn btn-outline-danger mt-2" hidden={!this.state.administrador.isAdm} onClick={() => this.esvaziarGrupo(this.state.grupoSelecionado)}>Esvaziar grupo</button>
+                <div className="row mt-2 mb-2">
+                    <div className="col-sm-4 col-md-4 col-lg-2">
+                        <button type="button" className="btn btn-outline-danger mt-2" hidden={!this.state.administrador.isAdm} onClick={() => this.esvaziarGrupo(this.state.grupoSelecionado)}>Esvaziar grupo</button>
+                    </div>
                 </div>
+                
 
                 <div className="table-responsive">
                     <label className="form-label">Membros</label>
@@ -590,11 +589,10 @@ export default class Grupo extends Component {
                     </table>
                 </div>
 
-                <div className="row mt-2">
-                    <div className="col-2">
-                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
-                    </div>
+                <div className="mt-3 mb-3 col-sm-4 col-md-2">
+                    <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
                 </div>
+                
             </div>
             </div>
         )

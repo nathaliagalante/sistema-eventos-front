@@ -226,12 +226,12 @@ carregarDadosLogin = () => {
                         <button type="button" hidden={!this.state.administrador.isAdm} className="btn btn-outline-primary" onClick={() => this.cadastrarNovo()}>Cadastrar</button>
                     </div>
 
-                    <div className="d-flex justify-content-around">
-                        <div className="col-md-5">
+                    <div className="d-flex gap-2 justify-content-end">
+                        <div className="col-md-4">
                             <input value={this.state.ano} placeholder="Ano" type="number" className="form-control" onChange={this.txtAno_change}></input>
                         </div>
                         
-                        <div className="col-md-6">
+                        <div className="col-auto">
                             <button type="button" hidden={!this.state.administrador.isAdm} className="btn btn-outline-primary" onClick={() => this.gerarAniversarios(this.state.ano)}>Gerar aniversários</button>
                         </div>
                     </div>
@@ -297,25 +297,23 @@ carregarDadosLogin = () => {
                     <input value={this.state.nome} onChange={this.txtNome_change} className="form-control" type="text"></input>
                 </div>
                 
-                <div className="mt-4 d-flex justify-content-between">
-                    <div className="col-md-5">
-                        <label for="descricao" className="form-label">Descrição</label>
-                        <input value={this.state.descricao} onChange={this.txtDescricao_change} className="form-control name-pull-image" type="text"></input>
+                <div className="col-md-3">
+                    <label for="dataInicio" className="form-label">Data Início</label>
+                    <div className="mt-1">
+                        <DatePicker value={this.state.dataInicio} onChange={this.dataInicio_change}></DatePicker>
                     </div>
-                    
-                    <div className="col-auto">
-                        <label for="dataInicio" className="form-label">Data Início</label>
-                        <div className="mt-1">
-                            <DatePicker value={this.state.dataInicio} onChange={this.dataInicio_change}></DatePicker>
-                        </div>
-                    </div>
+                </div>
                 
-                    <div className="col-auto">
-                        <label for="dataFim" className="form-label">Data Fim</label>
-                        <div className="mt-1">
-                            <DatePicker value={this.state.dataFim} onChange={this.dataFim_change}></DatePicker>
-                        </div>
+                <div className="col-md-3">
+                    <label for="dataFim" className="form-label">Data Fim</label>
+                    <div className="mt-1">
+                        <DatePicker value={this.state.dataFim} onChange={this.dataFim_change}></DatePicker>
                     </div>
+                </div>
+
+                <div className="col-md-6">
+                    <label for="descricao" className="form-label">Descrição</label>
+                    <input value={this.state.descricao} onChange={this.txtDescricao_change} className="form-control name-pull-image" type="text"></input>
                 </div>
                 
                 <div className="col-md-6">
@@ -338,14 +336,13 @@ carregarDadosLogin = () => {
                     <input value={this.state.valorInvestimento} onChange={this.txtValorInvestimento_change} className="form-control" type="number" id="valorInvestimento"></input>
                 </div>
                 
-                <div className="row mt-4">
-                    <div className="col-2">
-                        <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarAlterar(this.state.eventoSelecionado)}>Gravar</button>
-                    </div>
-                    <div className="col-2">
-                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
-                    </div>
+                <div className="mt-3 mb-3 col-md-2 col-lg-2">
+                    <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarAlterar(this.state.eventoSelecionado)}>Gravar</button>
                 </div>
+                <div className="mt-3 mb-3 col-md-2 col-lg-2">
+                    <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
+                </div>
+                
             </div>
             </div>
         )
@@ -370,26 +367,24 @@ carregarDadosLogin = () => {
                     <label for="nome" className="form-label">Nome</label>
                     <input value={this.state.nome} readOnly={true} className="form-control name-pull-image" type="text"></input>
                 </div>
-                
-                <div class="mt-4 d-flex justify-content-between">
-                    <div className="col-md-6">
-                        <label for="descricao" className="form-label">Descrição</label>
-                        <input value={this.state.descricao} readOnly={true} className="form-control" type="text"></input>
+                   
+                <div className="col-md-3">
+                    <label className="form-label">Data Início</label>
+                    <div className="mt-1">
+                        <DatePicker value={this.state.dataInicio} disabled={true}></DatePicker>
                     </div>
+                </div>
                     
-                    <div className="col-auto">
-                        <label className="form-label">Data Início</label>
-                        <div className="mt-1">
-                            <DatePicker value={this.state.dataInicio} disabled={true}></DatePicker>
-                        </div>
+                <div className="col-md-3">
+                    <label className="form-label">Data Fim</label>
+                    <div className="mt-1">
+                        <DatePicker value={this.state.dataFim} disabled={true}></DatePicker>
                     </div>
-                    
-                    <div className="col-auto">
-                        <label className="form-label">Data Fim</label>
-                        <div className="mt-1">
-                            <DatePicker value={this.state.dataFim} disabled={true}></DatePicker>
-                        </div>
-                    </div>
+                </div>
+
+                <div className="col-md-6">
+                    <label for="descricao" className="form-label">Descrição</label>
+                    <input value={this.state.descricao} readOnly={true} className="form-control" type="text"></input>
                 </div>
                 
                 <div className="col-md-6">
@@ -412,10 +407,8 @@ carregarDadosLogin = () => {
                     <input value={this.state.valorInvestimento} readOnly={true} className="form-control name-pull-image" type="number"></input>
                 </div>
                 
-                <div className="row mt-4">
-                    <div className="col-2">
-                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
-                    </div>
+                <div className="mt-3 mb-3 col-md-2 col-lg-2">
+                    <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
                 </div>
                 
             </div>
@@ -477,14 +470,13 @@ carregarDadosLogin = () => {
                     <input value={this.state.valorInvestimento} onChange={this.txtValorInvestimento_change} className="form-control" type="number" id="valorInvestimento"></input>
                 </div>
                 
-                <div className="row mt-4">
-                    <div className="col-sm-2">
-                        <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarNovo()}>Gravar</button>
-                    </div>
-                    <div className="col-sm-2">
-                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
-                    </div>
+                <div className="mt-3 mb-3 col-md-2 col-lg-2">
+                    <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarNovo()}>Gravar</button>
                 </div>
+                <div className="mt-3 mb-3 col-md-2 col-lg-2">
+                    <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
+                </div>
+
             </div>
             </div>
         )

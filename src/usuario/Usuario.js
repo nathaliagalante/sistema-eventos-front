@@ -363,6 +363,7 @@ export default class Usuario extends Component {
     componentDidMount() {
         this.preencherListaUsuario()
         this.carregarDadosLogin();
+        window.scrollTo(0, 0);
     }
 
     /* ----- BOTÃO VOLTAR ----- */
@@ -677,7 +678,7 @@ export default class Usuario extends Component {
             <div className="container">
             <div className="row mt-5 pt-4 g-4">
                 <div className="col-12">
-                    <h4>Gerenciamento de Usuário</h4>
+                    <h5>Gerenciamento de Usuário</h5>
                     <hr></hr>
                 </div>
 

@@ -30,6 +30,7 @@ export default class Usuario extends Component {
         alterando: false,
         analisando: false,
         gerenciando: false,
+        administrador: "",
         options: [
             { value: 'Membro', label: 'Membro' },
             { value: 'Administrador', label: 'Administrador' }
@@ -148,7 +149,7 @@ export default class Usuario extends Component {
             .then(data => this.setState({ parentesOpcoes: data }))
     }
 
-    /* ----- GRAVAR NOVO USUÁRIO ----- */
+    /* ----- CONVERTER NÍVEL DE ACESSO EM INT ----- */
     verificarNivelAcesso = (nivelAcesso) => {
         if(nivelAcesso === "Membro"){
                 this.setState({opcaoAcesso: "0"})
@@ -163,6 +164,7 @@ export default class Usuario extends Component {
         //console.log(this.state.opcaoAcesso)
     }
 
+    /* ----- CONVERTER SEXO EM BOOLEAN ----- */
     verificarSexo = (sexo) => {
         if(sexo === "Masculino"){
                 this.setState({sexobool: false})
@@ -175,6 +177,7 @@ export default class Usuario extends Component {
         }
     }
 
+    /* ----- GRAVAR NOVO USUÁRIO ----- */
     gravarNovo = () => {
         const dados = {
             "nomeCompleto": this.state.nomeCompleto,
@@ -350,8 +353,16 @@ export default class Usuario extends Component {
             .then(data => this.setState({ usuarios: data }));
     }
 
+    carregarDadosLogin = () => {
+        const url = window.servidor + '/usuario/login/visualizar'
+        fetch(url)
+            .then(response => response.json())
+            .then(data => this.setState({ administrador: data }));
+    }
+
     componentDidMount() {
         this.preencherListaUsuario()
+        this.carregarDadosLogin();
     }
 
     /* ----- BOTÃO VOLTAR ----- */
@@ -381,7 +392,7 @@ export default class Usuario extends Component {
                             <img src={this.state.foto} alt="Foto de Perfil" className="img-thumbnail rounded "/>
                         </figure>
                     </div>
-                    <input className="form-control-sm" id="formFileSm" type="file" onChange={this.foto_change}/>
+                    <input className="form-control-sm" id="formFileSm" type="file" accept="image/*" onChange={this.foto_change}/>
                 </div>
 
                 <div className="col-md-4">
@@ -438,11 +449,11 @@ export default class Usuario extends Component {
                 </div>
 
                 <div className="col-2 mt-3 mb-3">
-                    <button className="btn btn-primary" onClick={() => this.gravarNovo()}>Gravar</button>
+                    <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarNovo()}>Gravar</button>
                 </div>
 
                 <div className="col-2 mt-3 mb-3">
-                    <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
+                    <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.voltar()}>Voltar</button>
                 </div>
                 
             </div>
@@ -463,7 +474,7 @@ export default class Usuario extends Component {
 
                 <div className="col-md-6">
                     <label for="id" className="form-label">ID</label>
-                    <input value={this.state.id} readOnly={true} className="form-control" type="text" id="id"></input>
+                    <input value={this.state.id} readOnly={true} className="form-control" type="text" accept="image/*" id="id"></input>
                 </div>
 
                 <div className="col-md-6">
@@ -483,7 +494,20 @@ export default class Usuario extends Component {
 
                 <div className="col-md-4">
                     <label for="sexo" className="form-label">Sexo</label>
-                    <input value={this.state.sexo} readOnly={true} className="form-control" type="text" id="sexo"></input>
+                    <div className="row">
+                        <div className="col-md-4">
+                            <div className="form-check form-check-inline">
+                                <input className="form-check-input" type="radio" name="sexo" id="sexoMasc" value="Masculino" defaultChecked={!this.state.sexobool} onChange={this.txtSexo_change}></input>
+                                <label className="form-check-label" for="sexoMasc">Masculino</label>
+                            </div>
+                        </div> 
+                        <div className="col-md-4">
+                            <div class="form-check form-check-inline">
+                                <input className="form-check-input" type="radio" name="sexo" id="sexoFem" value="Feminino" defaultChecked={this.state.sexobool} onChange={this.txtSexo_change}></input>
+                                <label className="form-check-label" for="sexoFem">Feminino</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="col-md-4 box-center">
@@ -517,17 +541,17 @@ export default class Usuario extends Component {
                         onChange={this.nivelAcesso_change}
                         isSearchable={false}            
                         options={this.state.options}
-                        value={this.state.nivelAcesso}
-                        defaultValue={this.state.nivelAcesso}>
+                        //value={this.state.nivelAcesso}
+                        defaultValue={this.state.options[this.state.opcaoAcesso]}>
                     </Select>
                 </div>
 
                 <div className="row mt-4">
                     <div className="col-2">
-                        <button className="btn btn-primary" onClick={() => this.gravarAlterar()}>Gravar</button>
+                        <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarAlterar()}>Gravar</button>
                     </div>
                     <div className="col-2">
-                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
+                        <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.voltar()}>Voltar</button>
                     </div>
                 </div>
             </div>
@@ -673,7 +697,7 @@ export default class Usuario extends Component {
                         </div>
 
                         <div className="col-md-3">
-                            <button type="button" className="btn btn-outline-primary" onClick={() => this.adicionarParente(this.state.id, parente.value)}>Adicionar</button>
+                            <button type="button" className="btn btn-outline-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.adicionarParente(this.state.id, parente.value)}>Adicionar</button>
                         </div>
                     </div>
 
@@ -690,7 +714,7 @@ export default class Usuario extends Component {
                                 return <tr key={parente.id}>
                                     <th scope="row">{parente.id}</th>
                                     <td>{parente.nomeCompleto}</td>
-                                    <td><button type="button" onClick={() => this.removerParente(this.state.id, parente.id)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remover membro"><i className="bi bi-person-x"></i></button></td>
+                                    <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.removerParente(this.state.id, parente.id)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remover membro"><i className="bi bi-person-x"></i></button></td>
                                 </tr>
                             })}
                         </tbody>
@@ -709,7 +733,7 @@ export default class Usuario extends Component {
                         </div>
 
                         <div class="col-md-3">
-                            <button type="button" className="btn btn-outline-primary" onClick={() => this.adicionarTelefone(this.state.id)}>Adicionar</button>
+                            <button type="button" hidden={!this.state.administrador.isAdm} className="btn btn-outline-primary" onClick={() => this.adicionarTelefone(this.state.id)}>Adicionar</button>
                         </div>
                     </div>
 
@@ -726,7 +750,7 @@ export default class Usuario extends Component {
                                 return <tr key={tel.id}>
                                     <th scope="row">{tel.ddd}</th>
                                     <td>{tel.numero}</td>
-                                    <td><button type="button" onClick={() => this.removerTelefone(this.state.id, tel.id)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remover membro"><i className="bi bi-telephone-x"></i></button></td>
+                                    <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.removerTelefone(this.state.id, tel.id)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Remover membro"><i className="bi bi-telephone-x"></i></button></td>
                                 </tr>
                             })}
                         </tbody>
@@ -753,9 +777,9 @@ export default class Usuario extends Component {
                     <hr></hr>
                 </div>
                 <div className="col-2 mt-3 mb-3">
-                    <button type="button" className="btn btn-outline-primary mt-2" onClick={() => this.cadastrarNovo()}>Cadastrar</button>
+                    <button type="button" className="btn btn-outline-primary mt-2" hidden={!this.state.administrador.isAdm} onClick={() => this.cadastrarNovo()}>Cadastrar</button>
                 </div>
-                
+                <div class="table-responsive"></div>
                 <table className="table mt-2">
                     <thead>
                         <tr>
@@ -775,10 +799,10 @@ export default class Usuario extends Component {
                                 <th scope="row">{usuario.id}</th>
                                 <td>{usuario.nomeCompleto}</td>
                                 <td>{usuario.dataNascimento}</td>
-                                <td><button type="button" onClick={() => this.verDetalhes(usuario)} className="btn btn-success" data-toggle="tooltip" data-placement="top" title="Ver Mais"><i className="bi bi-three-dots"></i></button></td>
-                                <td><button type="button" onClick={() => this.alterarNovo(usuario)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar Usuário"><i className="bi bi-pencil-square"></i></button></td>
-                                <td><button type="button" onClick={() => this.gerenciarUsuario(usuario)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Gerenciar Telefones e Parentes"><i className="bi bi-journal-text"></i></button></td>    
-                                <td><button type="button" onClick={() => this.excluirUsuario(usuario)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir Usuário"><i className="bi bi-trash"></i></button></td>                                                                
+                                <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.verDetalhes(usuario)} className="btn btn-success" data-toggle="tooltip" data-placement="top" title="Ver Mais"><i className="bi bi-three-dots"></i></button></td>
+                                <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.alterarNovo(usuario)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar Usuário"><i className="bi bi-pencil-square"></i></button></td>
+                                <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.gerenciarUsuario(usuario)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Gerenciar Telefones e Parentes"><i className="bi bi-journal-text"></i></button></td>    
+                                <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.excluirUsuario(usuario)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir Usuário"><i className="bi bi-trash"></i></button></td>                                                                
                             </tr>
                         })}
                     </tbody>

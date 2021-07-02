@@ -38,7 +38,7 @@ export default class Menu extends Component {
         return (
             <div>
                 <Navbar className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" color="inverse" light expand="md">
-                    <div className="container-fluid color-nav text-white p-2">
+                    <div className="container-fluid text-white p-2">
                         <NavbarToggler onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="ml-auto" navbar>

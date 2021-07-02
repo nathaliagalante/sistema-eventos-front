@@ -204,75 +204,74 @@ export default class Evento extends Component {
 
     }
 
-carregarDadosLogin = () => {
+    carregarDadosLogin = () => {
         const url = window.servidor + '/usuario/login/visualizar'
         fetch(url)
             .then(response => response.json())
             .then(data => this.setState({ administrador: data }));
     }
-    
+
     /* ----------------------------------------------- TELA LISTA EVENTOS --------------------------------------------- */
     renderListaEventos = () => {
         return (
             <div className="container">
-            <div className="mt-5 pt-5">
-                <div className="col-12">
-                    <h4>Eventos</h4>
-                    <hr></hr>
-                </div>
-
-                <div className="mt-3 mb-3 d-flex justify-content-between">
-                    <div className="col-md-2">
-                        <button type="button" hidden={!this.state.administrador.isAdm} className="btn btn-outline-primary" onClick={() => this.cadastrarNovo()}>Cadastrar</button>
+                <div className="mt-5 pt-5">
+                    <div className="col-12">
+                        <h4>Eventos</h4>
+                        <hr></hr>
                     </div>
 
-                    <div className="d-flex gap-2 justify-content-end">
-                        <div className="col-md-4">
-                            <input value={this.state.ano} placeholder="Ano" type="number" className="form-control" onChange={this.txtAno_change}></input>
+                    <div className="mt-3 mb-3 d-flex flex-md-row flex-column justify-content-between">
+                        <div className="col-auto mb-3">
+                            <button type="button" hidden={!this.state.administrador.isAdm} className="btn btn-outline-primary" onClick={() => this.cadastrarNovo()}>Cadastrar</button>
                         </div>
-                        
-                        <div className="col-auto">
-                            <button type="button" hidden={!this.state.administrador.isAdm} className="btn btn-outline-primary" onClick={() => this.gerarAniversarios(this.state.ano)}>Gerar aniversários</button>
+
+                        <div className="d-md-flex justify-content-around">
+                            <div className="col-sm-5">
+                                <input value={this.state.ano} placeholder="Ano" type="number" className="form-control" onChange={this.txtAno_change}></input>
+                            </div>
+
+                            <div className="col-md-auto">
+                                <button type="button" hidden={!this.state.administrador.isAdm} className="btn btn-outline-primary" onClick={() => this.gerarAniversarios(this.state.ano)}>Gerar aniversários</button>
+                            </div>
                         </div>
                     </div>
-                    
-                </div>
 
-                <div class="table-responsive">
-                    <table className="table mt-2">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Data de início</th>
-                                <th scope="col">Data de encerramento</th>
-                                <th scope="col">Local</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.eventos && this.state.eventos.map(evento => {
-                                var dataInicioConvertida = new Date(evento.dataInicio);
-                                var dataFimConvertida = new Date(evento.dataFim);
-                                dataInicioConvertida.setDate(dataInicioConvertida.getDate() + 1);
-                                dataFimConvertida.setDate(dataFimConvertida.getDate() + 1);
-                                return <tr key={evento.id}>
-                                    <th scope="row">{evento.id}</th>
-                                    <td>{evento.nome}</td>
-                                    <td>{((dataInicioConvertida.getDate())) + "/" + ((dataInicioConvertida.getMonth() + 1)) + "/" + dataInicioConvertida.getFullYear()}</td>
-                                    <td>{((dataFimConvertida.getDate())) + "/" + ((dataFimConvertida.getMonth() + 1)) + "/" + dataFimConvertida.getFullYear()}</td>
-                                    <td>{evento.localEvento}</td>
-                                    <td><button type="button" onClick={() => this.verDetalhes(evento)} className="btn btn-success" data-toggle="tooltip" data-placement="top" title="Ver Mais"><i className="bi bi-three-dots"></i></button></td>
-                                    <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.alterarEvento(evento)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar evento"><i className="bi bi-pencil-square"></i></button></td>
-                                    <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.excluirEvento(evento)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir evento"><i className="bi bi-trash"></i></button></td>
+                    <div class="table-responsive">
+                        <table className="table mt-2">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Data de início</th>
+                                    <th scope="col">Data de encerramento</th>
+                                    <th scope="col">Local</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
                                 </tr>
-                            })}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {this.state.eventos && this.state.eventos.map(evento => {
+                                    var dataInicioConvertida = new Date(evento.dataInicio);
+                                    var dataFimConvertida = new Date(evento.dataFim);
+                                    dataInicioConvertida.setDate(dataInicioConvertida.getDate() + 1);
+                                    dataFimConvertida.setDate(dataFimConvertida.getDate() + 1);
+                                    return <tr key={evento.id}>
+                                        <th scope="row">{evento.id}</th>
+                                        <td>{evento.nome}</td>
+                                        <td>{((dataInicioConvertida.getDate())) + "/" + ((dataInicioConvertida.getMonth() + 1)) + "/" + dataInicioConvertida.getFullYear()}</td>
+                                        <td>{((dataFimConvertida.getDate())) + "/" + ((dataFimConvertida.getMonth() + 1)) + "/" + dataFimConvertida.getFullYear()}</td>
+                                        <td>{evento.localEvento}</td>
+                                        <td><button type="button" onClick={() => this.verDetalhes(evento)} className="btn btn-success" data-toggle="tooltip" data-placement="top" title="Ver Mais"><i className="bi bi-three-dots"></i></button></td>
+                                        <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.alterarEvento(evento)} className="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Editar evento"><i className="bi bi-pencil-square"></i></button></td>
+                                        <td><button type="button" hidden={!this.state.administrador.isAdm} onClick={() => this.excluirEvento(evento)} className="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Excluir evento"><i className="bi bi-trash"></i></button></td>
+                                    </tr>
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
             </div>
         )
     }
@@ -281,69 +280,69 @@ carregarDadosLogin = () => {
     renderAlterarEvento = () => {
         return (
             <div class="container">
-            <div className="row mt-5 pt-4 g-4">
-                <div className="col-12">
-                    <h4>Editar Evento</h4>
-                    <hr></hr>
-                </div>
-
-                <div className="col-md-6">
-                    <label for="id" className="form-label">ID</label>
-                    <input value={this.state.id} readOnly={true} className="form-control" type="text"></input>
-                </div>
-                
-                <div className="col-md-6">
-                    <label for="nome" className="form-label">Nome</label>
-                    <input value={this.state.nome} onChange={this.txtNome_change} className="form-control" type="text"></input>
-                </div>
-                
-                <div className="col-md-3">
-                    <label for="dataInicio" className="form-label">Data Início</label>
-                    <div className="mt-1">
-                        <DatePicker value={this.state.dataInicio} onChange={this.dataInicio_change}></DatePicker>
+                <div className="row mt-5 pt-4 g-4">
+                    <div className="col-12">
+                        <h4>Editar Evento</h4>
+                        <hr></hr>
                     </div>
-                </div>
-                
-                <div className="col-md-3">
-                    <label for="dataFim" className="form-label">Data Fim</label>
-                    <div className="mt-1">
-                        <DatePicker value={this.state.dataFim} onChange={this.dataFim_change}></DatePicker>
-                    </div>
-                </div>
 
-                <div className="col-md-6">
-                    <label for="descricao" className="form-label">Descrição</label>
-                    <input value={this.state.descricao} onChange={this.txtDescricao_change} className="form-control name-pull-image" type="text"></input>
-                </div>
+                    <div className="col-md-6">
+                        <label for="id" className="form-label">ID</label>
+                        <input value={this.state.id} readOnly={true} className="form-control" type="text"></input>
+                    </div>
                 
-                <div className="col-md-6">
-                    <label for="local" className="form-label">Local</label>
-                    <input value={this.state.localEvento} onChange={this.txtLocalEvento_change} className="form-control" type="text" id="local"></input>
-                </div>
+                    <div className="col-md-6">
+                        <label for="nome" className="form-label">Nome</label>
+                        <input value={this.state.nome} onChange={this.txtNome_change} className="form-control" type="text"></input>
+                    </div>
                 
-                <div className="col-md-6">
-                    <label for="localInscricao" className="form-label">Local Inscrição</label>
-                    <input value={this.state.localInscricao} onChange={this.txtLocalInscricao_change} className="form-control name-pull-image" type="text"></input>
-                </div>
+                    <div className="col-md-3">
+                        <label for="dataInicio" className="form-label">Data Início</label>
+                        <div className="mt-1">
+                            <DatePicker value={this.state.dataInicio} onChange={this.dataInicio_change}></DatePicker>
+                        </div>
+                    </div>
                 
-                <div className="col-md-6">
-                    <label for="publicoAlvo" className="form-label">Público Alvo</label>
-                    <input value={this.state.publicoAlvo} onChange={this.txtPublicoAlvo_change} className="form-control" type="text" id="publicoAlvo"></input>
-                </div>
+                    <div className="col-md-3">
+                        <label for="dataFim" className="form-label">Data Fim</label>
+                        <div className="mt-1">
+                            <DatePicker value={this.state.dataFim} onChange={this.dataFim_change}></DatePicker>
+                        </div>
+                    </div>
+
+                    <div className="col-md-6">
+                        <label for="descricao" className="form-label">Descrição</label>
+                        <input value={this.state.descricao} onChange={this.txtDescricao_change} className="form-control name-pull-image" type="text"></input>
+                    </div>
                 
-                <div className="col-md-6">
-                    <label for="valorInvestimento" className="form-label">Valor de Investimento</label>
-                    <input value={this.state.valorInvestimento} onChange={this.txtValorInvestimento_change} className="form-control" type="number" id="valorInvestimento"></input>
-                </div>
+                    <div className="col-md-6">
+                        <label for="local" className="form-label">Local</label>
+                        <input value={this.state.localEvento} onChange={this.txtLocalEvento_change} className="form-control" type="text" id="local"></input>
+                    </div>
                 
-                <div className="mt-3 mb-3 col-md-2 col-lg-2">
-                    <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarAlterar(this.state.eventoSelecionado)}>Gravar</button>
-                </div>
-                <div className="mt-3 mb-3 col-md-2 col-lg-2">
-                    <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
-                </div>
+                    <div className="col-md-6">
+                        <label for="localInscricao" className="form-label">Local Inscrição</label>
+                        <input value={this.state.localInscricao} onChange={this.txtLocalInscricao_change} className="form-control name-pull-image" type="text"></input>
+                    </div>
                 
-            </div>
+                    <div className="col-md-6">
+                        <label for="publicoAlvo" className="form-label">Público Alvo</label>
+                        <input value={this.state.publicoAlvo} onChange={this.txtPublicoAlvo_change} className="form-control" type="text" id="publicoAlvo"></input>
+                    </div>
+                
+                    <div className="col-md-6">
+                        <label for="valorInvestimento" className="form-label">Valor de Investimento</label>
+                        <input value={this.state.valorInvestimento} onChange={this.txtValorInvestimento_change} className="form-control" type="number" id="valorInvestimento"></input>
+                    </div>
+                
+                    <div className="mt-3 mb-3 col-md-2 col-lg-2">
+                        <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarAlterar(this.state.eventoSelecionado)}>Gravar</button>
+                    </div>
+                    <div className="mt-3 mb-3 col-md-2 col-lg-2">
+                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
+                    </div>
+                
+                </div>
             </div>
         )
     }
@@ -352,66 +351,65 @@ carregarDadosLogin = () => {
     renderDetalhesEvento = () => {
         return (
             <div className="container">
-            <div className="row mt-5 pt-4 g-4">
-                <div className="col-12">
-                    <h4>Detalhes do Evento</h4>
-                    <hr></hr>
-                </div>
+                <div className="row mt-5 pt-4 g-4">
+                    <div className="col-12">
+                        <h4>Detalhes do Evento</h4>
+                        <hr></hr>
+                    </div>
 
-                <div className="col-md-6">
-                    <label for="id" className="form-label">ID</label>
-                    <input value={this.state.id} readOnly={true} className="form-control" type="text"></input>
-                </div>
+                    <div className="col-md-6">
+                        <label for="id" className="form-label">ID</label>
+                        <input value={this.state.id} readOnly={true} className="form-control" type="text"></input>
+                    </div>
                 
-                <div className="col-md-6">
-                    <label for="nome" className="form-label">Nome</label>
-                    <input value={this.state.nome} readOnly={true} className="form-control name-pull-image" type="text"></input>
-                </div>
+                    <div className="col-md-6">
+                        <label for="nome" className="form-label">Nome</label>
+                        <input value={this.state.nome} readOnly={true} className="form-control name-pull-image" type="text"></input>
+                    </div>
                    
-                <div className="col-md-3">
-                    <label className="form-label">Data Início</label>
-                    <div className="mt-1">
-                        <DatePicker value={this.state.dataInicio} disabled={true}></DatePicker>
+                    <div className="col-md-3">
+                        <label className="form-label">Data Início</label>
+                        <div className="mt-1">
+                            <DatePicker value={this.state.dataInicio} disabled={true}></DatePicker>
+                        </div>
                     </div>
-                </div>
                     
-                <div className="col-md-3">
-                    <label className="form-label">Data Fim</label>
-                    <div className="mt-1">
-                        <DatePicker value={this.state.dataFim} disabled={true}></DatePicker>
+                    <div className="col-md-3">
+                        <label className="form-label">Data Fim</label>
+                        <div className="mt-1">
+                            <DatePicker value={this.state.dataFim} disabled={true}></DatePicker>
+                        </div>
+                    </div>
+
+                    <div className="col-md-6">
+                        <label for="descricao" className="form-label">Descrição</label>
+                        <input value={this.state.descricao} readOnly={true} className="form-control" type="text"></input>
+                    </div>
+                
+                    <div className="col-md-6">
+                        <label className="form-label">Local Evento</label>
+                        <input value={this.state.localEvento} readOnly={true} className="form-control" type="text"></input>
+                    </div>
+                
+                    <div className="col-md-6">
+                        <label className="form-label">Local Inscrição</label>
+                        <input value={this.state.localInscricao} readOnly={true} className="form-control" type="text"></input>
+                    </div>
+                
+                    <div className="col-md-6">
+                        <label className="form-label">Público Alvo</label>
+                        <input value={this.state.publicoAlvo} readOnly={true} className="form-control" type="text"></input>
+                    </div>
+                
+                    <div className="col-md-6">
+                        <label className="form-label">Valor de Investimento</label>
+                        <input value={this.state.valorInvestimento} readOnly={true} className="form-control name-pull-image" type="number"></input>
+                    </div>
+                
+                    <div className="mt-3 mb-3 col-md-2 col-lg-2">
+                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
                     </div>
                 </div>
-
-                <div className="col-md-6">
-                    <label for="descricao" className="form-label">Descrição</label>
-                    <input value={this.state.descricao} readOnly={true} className="form-control" type="text"></input>
-                </div>
-                
-                <div className="col-md-6">
-                    <label className="form-label">Local Evento</label>
-                    <input value={this.state.localEvento} readOnly={true} className="form-control" type="text"></input>
-                </div>
-                
-                <div className="col-md-6">
-                    <label className="form-label">Local Inscrição</label>
-                    <input value={this.state.localInscricao} readOnly={true} className="form-control" type="text"></input>
-                </div>
-                
-                <div className="col-md-6">
-                    <label className="form-label">Público Alvo</label>
-                    <input value={this.state.publicoAlvo} readOnly={true} className="form-control" type="text"></input>
-                </div>
-                
-                <div className="col-md-6">
-                    <label className="form-label">Valor de Investimento</label>
-                    <input value={this.state.valorInvestimento} readOnly={true} className="form-control name-pull-image" type="number"></input>
-                </div>
-                
-                <div className="mt-3 mb-3 col-md-2 col-lg-2">
-                    <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
-                </div>
-                
-            </div>
             </div>
         )
     }
@@ -420,64 +418,63 @@ carregarDadosLogin = () => {
     renderCadastrarEvento = () => {
         return (
             <div className="container">
-            <div className="row mt-5 pt-4 g-4">
-                <div className="col-12">
-                    <h4>Cadastrar Evento</h4>
-                    <hr></hr>
-                </div>
-
-                <div className="col-md-6">
-                    <label for="nome" className="form-label">Nome</label>
-                    <input value={this.state.nome} onChange={this.txtNome_change} className="form-control" type="text"></input>
-                </div>
-               
-                <div className="col-md-6">
-                    <label for="descricao" className="form-label">Descrição</label>
-                    <input value={this.state.descricao} onChange={this.txtDescricao_change} className="form-control" type="text" id="descricao"></input>
-                </div>
-                
-                <div className="col-md-6">
-                    <label for="dataInicio" className="form-label">Data Início</label>
-                    <div className="mt-1">
-                        <DatePicker value={this.state.dataInicio} onChange={this.dataInicio_change}></DatePicker>
+                <div className="row mt-5 pt-4 g-4">
+                    <div className="col-12">
+                        <h4>Cadastrar Evento</h4>
+                        <hr></hr>
                     </div>
-                </div>
-                
-                <div className="col-md-6">
-                    <label for="dataFim" className="form-label">Data Fim</label>
-                    <div className="mt-1">
-                        <DatePicker value={this.state.dataFim} onChange={this.dataFim_change}></DatePicker>
-                    </div>
-                </div>
-                
-                <div className="col-md-6">
-                    <label for="local" className="form-label">Local Evento</label>
-                    <input value={this.state.localEvento} onChange={this.txtLocalEvento_change} className="form-control" type="text" id="local"></input>
-                </div>
-                
-                <div className="col-md-6">
-                    <label for="localInscricao" className="form-label">Local Inscrição</label>
-                    <input value={this.state.localInscricao} onChange={this.txtLocalInscricao_change} className="form-control" type="text" id="localInscricao"></input>
-                </div>
-                
-                <div className="col-md-6">
-                    <label for="publicoAlvo" className="form-label">Público Alvo</label>
-                    <input value={this.state.publicoAlvo} onChange={this.txtPublicoAlvo_change} className="form-control name-pull-image" type="text" id="publicoAlvo"></input>
-                </div>
-                
-                <div className="col-md-6">
-                    <label for="valorInvestimento" className="form-label">Valor de Investimento</label>
-                    <input value={this.state.valorInvestimento} onChange={this.txtValorInvestimento_change} className="form-control" type="number" id="valorInvestimento"></input>
-                </div>
-                
-                <div className="mt-3 mb-3 col-md-2 col-lg-2">
-                    <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarNovo()}>Gravar</button>
-                </div>
-                <div className="mt-3 mb-3 col-md-2 col-lg-2">
-                    <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
-                </div>
 
-            </div>
+                    <div className="col-md-6">
+                        <label for="nome" className="form-label">Nome</label>
+                        <input value={this.state.nome} onChange={this.txtNome_change} className="form-control" type="text"></input>
+                    </div>
+
+                    <div className="col-md-6">
+                        <label for="descricao" className="form-label">Descrição</label>
+                        <input value={this.state.descricao} onChange={this.txtDescricao_change} className="form-control" type="text" id="descricao"></input>
+                    </div>
+                    <div className="col-md-6">
+                        <label for="dataInicio" className="form-label">Data Início</label>
+                        <div className="mt-1">
+                            <DatePicker value={this.state.dataInicio} onChange={this.dataInicio_change}></DatePicker>
+                        </div>
+                    </div>
+
+                    <div className="col-md-6">
+                        <label for="dataFim" className="form-label">Data Fim</label>
+                        <div className="mt-1">
+                            <DatePicker value={this.state.dataFim} onChange={this.dataFim_change}></DatePicker>
+                        </div>
+                    </div>
+                    
+                    <div className="col-md-6">
+                        <label for="local" className="form-label">Local Evento</label>
+                        <input value={this.state.localEvento} onChange={this.txtLocalEvento_change} className="form-control" type="text" id="local"></input>
+                    </div>
+                
+                    <div className="col-md-6">
+                        <label for="localInscricao" className="form-label">Local Inscrição</label>
+                        <input value={this.state.localInscricao} onChange={this.txtLocalInscricao_change} className="form-control" type="text" id="localInscricao"></input>
+                    </div>
+                
+                    <div className="col-md-6">
+                        <label for="publicoAlvo" className="form-label">Público Alvo</label>
+                        <input value={this.state.publicoAlvo} onChange={this.txtPublicoAlvo_change} className="form-control name-pull-image" type="text" id="publicoAlvo"></input>
+                    </div>
+                
+                    <div className="col-md-6">
+                        <label for="valorInvestimento" className="form-label">Valor de Investimento</label>
+                        <input value={this.state.valorInvestimento} onChange={this.txtValorInvestimento_change} className="form-control" type="number" id="valorInvestimento"></input>
+                    </div>
+                
+                    <div className="mt-3 mb-3 col-md-2 col-lg-2">
+                        <button className="btn btn-primary" hidden={!this.state.administrador.isAdm} onClick={() => this.gravarNovo()}>Gravar</button>
+                    </div>
+                    <div className="mt-3 mb-3 col-md-2 col-lg-2">
+                        <button className="btn btn-primary" onClick={() => this.voltar()}>Voltar</button>
+                    </div>
+
+                </div>
             </div>
         )
     }

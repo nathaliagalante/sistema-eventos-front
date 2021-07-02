@@ -307,12 +307,12 @@ export default class Grupo extends Component {
                     <hr></hr>
                 </div>
 
-                <div className="col-12">
+                <div className="col-md-12">
                     <label for="nome" className="form-label">Nome</label>
                     <input value={this.state.nome} onChange={this.txtNome_change} className="form-control" type="text"></input>
                 </div>
                 
-                <div className="col-12">
+                <div className="col-md-12">
                     <label for="descricao" className="form-label">Descrição</label>
                     <input value={this.state.descricao} onChange={this.txtDescricao_change} className="form-control name-pull-image" type="text"></input>
                 </div>
@@ -567,14 +567,12 @@ export default class Grupo extends Component {
 
                 <div className="table-responsive">
                     <label className="form-label">Membros</label>
-                    <table className="table table-bordered">
+                    <table className="table mt-2">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Nome</th>
                                 <th scope="" className="col-1"></th>
-                                <th scope=""></th>
-                                <th scope=""></th>
                             </tr>
                         </thead>
                         <tbody>

@@ -228,7 +228,7 @@ export default class Evento extends Component {
 
                         <div className="d-md-flex justify-content-around">
                             <div className="col-sm-5">
-                                <input value={this.state.ano} placeholder="Ano" type="number" className="form-control" onChange={this.txtAno_change}></input>
+                                <input value={this.state.ano} placeholder="Ano" type="number" className="form-control" hidden={!this.state.administrador.isAdm}  onChange={this.txtAno_change}></input>
                             </div>
 
                             <div className="col-md-auto">
